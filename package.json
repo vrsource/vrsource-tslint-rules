@@ -1,9 +1,23 @@
 {
-  "name": "tslint_custom_rule_seed",
-  "version": "0.0.1",
-  "description": "Testing TS Rules",
-  "author": "",
-  "private": true,
+  "name": "vrsource-tslint-rules",
+  "version": "0.1.0",
+  "description": "Extension rules for tslint",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vrsource/vrsource-tslint-rules"
+  },
+  "keywords": [
+    "eslint",
+    "tslint",
+    "custom-rules",
+    "rules",
+    "stylish",
+    "lint",
+    "linting",
+    "linter",
+    "tslint-plugin"
+  ],
+  "license": "MIT",
   "dependencies": {
      "tslint": "^3.6.0"
   },
