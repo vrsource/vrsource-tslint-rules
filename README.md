@@ -4,7 +4,7 @@ This project includes a variety of tslint rules we have found useful for our pro
 
 # Usage
 
-Install from npm to your devDependencies
+Install from npm to your devDependencies  (https://www.npmjs.com/package/vrsource-tslint-rules)
 
 ```
 npm install --save-dev vrsource-tslint-rules
