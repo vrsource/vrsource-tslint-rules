@@ -1,9 +1,0 @@
-import * as '_' from 'lodash';
-~~~~~~~~~~~~~~~      [import statement forbidden]
-
-const octopus = 5;
-
-let giraffe: number, tiger: number;
-
-const tree = 5;
-const skyscraper = 100;
