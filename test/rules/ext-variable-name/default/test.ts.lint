@@ -1,0 +1,107 @@
+/**
+Lint test where everything should be in camel case
+*/
+
+var moduleCamel  = "camel";
+var ModulePascal = "pascal";
+    ~~~~~~~~~~~~    [camel]
+const MODULE_CONST  = "const"
+const another_const = "const"
+      ~~~~~~~~~~~~~ [upper]
+var _noLeading = "";
+    ~~~~~~~~~~  [lead]
+var trailing_ = "";
+    ~~~~~~~~~   [trail]
+
+function varScope() {
+    let localCamel = 10;
+        ~~~~~~~~~~  [snake]
+    let local_snake = 20;
+
+    function local_func() {}
+    function localFunc() {}
+             ~~~~~~~~~  [snake]
+}
+
+function snake_func() {}
+         ~~~~~~~~~~  [camel]
+
+class camelClass {}
+      ~~~~~~~~~~ [pascal]
+class UPPER_CLASS {}
+      ~~~~~~~~~~~ [pascal]
+
+function innerScope() {
+    class goodCamel {}
+    class BadPascal {}
+          ~~~~~~~~~ [camel]
+}
+
+interface PascalIface {}
+          ~~~~~~~~~~~ [regex]
+interface IPascalIface {}
+
+class TestClass {
+    private privCamel = 10;
+    private _leadPriv = 10;
+    private trailPriv_ = 10;
+            ~~~~~~~~~~  [trail]
+    private snake_priv = 10;
+            ~~~~~~~~~~  [camel]
+
+    protected protCamel = 10;
+    protected _leadProt = 10;
+              ~~~~~~~~~  [lead]
+    protected trailProt_ = 10;
+    protected snake_prot = 10;
+              ~~~~~~~~~~ [camel]
+
+    public snake_pub = 10;
+    public camelPub = 10;
+           ~~~~~~~~  [snake]
+    other_pub = 20;
+}
+
+class AnotherClass {
+    public doSomething() {}
+    doSomethingElse() {}
+
+    protected snake_method_() {}
+    protected camelProt() {}
+              ~~~~~~~~~  [snake]
+
+    private _PascalPriv() {}
+    private snake_priv_() {}
+            ~~~~~~~~~~~  [pascal]
+            ~~~~~~~~~~~  [trail]
+}
+
+class StaticClass {
+    static const UPPER_CONST = 10;
+    static const PascalConst = 20;
+                 ~~~~~~~~~~~  [upper]
+
+    static StaticConst = 20;
+    static snake_const = 10;
+           ~~~~~~~~~~~   [pascal]
+}
+
+function testParams(goodParam, bad_param, _badLead, badTrail_) {}
+                               ~~~~~~~~~                       [camel]
+                                          ~~~~~~~~             [lead]
+                                                    ~~~~~~~~~  [trail]
+let { foo, bar } = { foo: 1, bar: 2 };
+let [ InvalidFoo, invalid_bar, ...invalid_baz ] =  [1, 2, 3, 4];
+      ~~~~~~~~~~                              [camel]
+                  ~~~~~~~~~~~                 [camel]
+                                  ~~~~~~~~~~~ [camel]
+
+
+[lead]: Variable name must not have leading underscore
+[camel]: Variable must be in camel case
+[pascal]: Variable must be in pascal case
+[snake]: Variable must be in snake case
+[upper]: Variable must be in uppercase
+[ban]: Variable name clashes with keyword/type
+[trail]: Variable name must not have trailing underscore
+[regex]: Variable name did not match required regex

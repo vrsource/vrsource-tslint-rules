@@ -1,0 +1,35 @@
+{
+  "rulesDirectory": "./rules",
+  "rules": {
+    "ext-variable-name": [
+       true,
+       ["variable", "local",  "snake"],
+       ["variable", "const",  "upper"],
+       ["variable",           "camel"],
+
+       ["class", "local",  "camel"],
+       ["class",           "pascal"],
+
+       ["interface", "pascal", {"regex": "^I.*$"}],
+
+       ["function", "local", "snake"],
+       ["function",          "camel"],
+
+       ["property", "static", "const", "upper"],
+       ["property", "static", "pascal"],
+
+       ["property", "private",   "camel", "allow-leading-underscore"],
+       ["property", "protected", "camel", "allow-trailing-underscore"],
+       ["property", "public",    "snake"],
+
+       ["method", "public", "camel"],
+       ["method", "protected", "snake", "allow-trailing-underscore"],
+       ["method", "private",   "pascal", "allow-leading-underscore"],
+
+       ["parameter", "camel"],
+
+
+       ["default",                   {"regex": "^NOT_YET$"}]
+    ]
+  }
+}

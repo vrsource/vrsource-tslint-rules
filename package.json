@@ -1,0 +1,13 @@
+{
+  "name": "tslint_custom_rule_seed",
+  "version": "0.0.1",
+  "description": "Testing TS Rules",
+  "author": "",
+  "private": true,
+  "dependencies": {
+     "tslint": "^3.6.0"
+  },
+  "devDependencies": {
+     "typescript": "^1.8.10"
+  }
+}
