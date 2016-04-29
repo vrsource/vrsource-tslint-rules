@@ -78,6 +78,15 @@ Checks allowed:
    * "ban-keywords": bans a list of language keywords from being used
    * {"regex": "^.*$"}: checks the variable name against the given regex
 
+## prefer-const
+
+Prefer the use of const keyword instead of let for values that are never assigned to
+
+```json
+"prefer-const": true
+```
+
+note: this rule is copied from the typescript project.
 
 # Changelog
 

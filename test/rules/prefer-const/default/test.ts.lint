@@ -1,0 +1,20 @@
+/**
+Lint test where we should use const if possible
+*/
+function doSomething() {
+    let not_changed = 10;
+        ~~~~~~~~~~~~~~~~   [Identifier 'not_changed' never appears on the LHS of an assignment - use const instead of let for its declaration.]
+    const good      = 30;
+
+    let var1 = 10;
+    let var2 = 20;
+    let var3 = 30;
+
+    var1 = var1 * 10;
+
+    var2++;
+
+    var3 = getValue();
+}
+
+function getValue(): number { return 10; }
