@@ -27,20 +27,19 @@ Now configure some of the new rules.
 
 # Rules
 
+## ext-variable-name
 
- ## ext-variable-name
+This rule provides extensive support for customizing allowable variable names
+for a wide variety of variable tags.  The rule is configured by setting up a
+list of sub-rules that specify the tags of variables to check and the checks
+to perform on the variable's name.  The sub-rules are checked in order
+and the first one that matches the tags of variable being checked is the
+only one that is used.
 
- This rule provides extensive support for customizing allowable variable names
- for a wide variety of variable tags.  The rule is configured by setting up a
- list of sub-rules that specify the tags of variables to check and the checks
- to perform on the variable's name.  The sub-rules are checked in order
- and the first one that matches the tags of variable being checked is the
- only one that is used.
+An example set of sub-rules for an example coding standard is shown below.
 
- An example set of sub-rules for an example coding standard is shown below.
-
- ```json
- ext-variable-name: [
+```json
+ext-variable-name: [
    true,
    ["class",                 "pascal"],
    ["interface",             "pascal", {"regex": "^I.*$"}],
@@ -145,7 +144,7 @@ High Priority
 "no-param-reassign" - direct and properties
 "no-duplicate-imports"
 arrow function: allow no parens, no block if single line (ex: in a forEach), else require parens and block
-arrow-body-style: p5 single line style
+arrow-body-style: arrow single line style
 
 Medium Priority
 ---------------
