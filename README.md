@@ -140,8 +140,6 @@ Notes for how to build new rules and tests:
 
 High Priority
 -------------
-
-"prefer-const"  - MS Rule: https://github.com/palantir/tslint/issues/491
 "one-var"       - accepting: https://github.com/palantir/tslint/issues/525
                 - https://github.com/Microsoft/tslint-microsoft-contrib/blob/master/src/noMultipleVarDeclRule.ts
 "no-param-reassign" - direct and properties
