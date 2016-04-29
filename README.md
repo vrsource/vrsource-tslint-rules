@@ -90,6 +90,14 @@ note: this rule is copied from the typescript project.
 
 # Changelog
 
+# 0.3.0
+
+  * Add prefer-const rule
+
+# 0.2.0
+
+  * Remove demonstration rule
+
 # 0.1.0
 
   * First version
