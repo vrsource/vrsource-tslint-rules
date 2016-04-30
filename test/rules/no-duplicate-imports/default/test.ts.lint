@@ -1,0 +1,14 @@
+/**
+Lint test of not allowing duplicate imports
+*/
+import { merge } from 'module';
+import path from 'another-module';
+import { find } from 'module';
+                     ~~~~~~~~ [import]
+
+
+import { merge } from 'other_mod';
+import _, { find } from 'other_mod';
+                        ~~~~~~~~~~~ [import]
+
+[import]: Found duplicate import
