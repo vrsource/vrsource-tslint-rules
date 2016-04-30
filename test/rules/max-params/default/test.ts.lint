@@ -1,0 +1,28 @@
+/**
+Lint test for maximum number of parameters
+*/
+
+function func1(v1, v2, v3) {}
+
+function func2(v1, v2, v3, v4) {}
+               ~~~~~~~~~~~~~~  [params]
+
+let b = function(v1, v2, v3, v4) {};
+                 ~~~~~~~~~~~~~~ [params]
+
+
+let ar1 = (x, y, z) => { return 10; }
+
+let ar2 = (x, y, z, w) => { return 10; }
+           ~~~~~~~~~~  [params]
+
+class TestClass {
+
+   method1(v1, v2, v3) {}
+
+   method2(v1, v2, v3, v4) {}
+           ~~~~~~~~~~~~~~  [params]
+}
+
+
+[params]: More than max-params: 3

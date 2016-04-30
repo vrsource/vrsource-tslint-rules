@@ -110,8 +110,23 @@ See: http://eslint.org/docs/rules/no-duplicate-imports
 "no-duplicate-imports": true
 ```
 
+## max-params
+
+Rule to enforce a maximum number of parameters for functions and methods.
+
+```javascript
+"max-params": [
+    true,
+    3
+]
+```
+
 
 # Changelog
+
+# 0.6.0
+
+  * Add max-params rule
 
 # 0.5.0
 

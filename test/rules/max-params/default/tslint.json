@@ -1,0 +1,6 @@
+{
+  "rulesDirectory": "./rules",
+  "rules": {
+    "max-params": [true, 3]
+  }
+}
