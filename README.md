@@ -140,6 +140,19 @@ See: http://eslint.org/docs/rules/no-duplicate-imports
 "no-duplicate-imports": true
 ```
 
+## prefer-case-blocks
+
+This rule checks to make sure that all case clauses use a block
+around the statements of the case.  This helps to protect against
+issues with lexcical declarations that would become visible to the
+entire switch statement.
+
+To maintain consistency, the rule requires a block in all cases.
+
+```javascript
+"prefer-case-blocks": true
+```
+
 ## prefer-const
 
 Prefer the use of const keyword instead of let for values that are never assigned to
@@ -167,6 +180,10 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ```
 
 # Changelog
+
+# 0.10.0
+
+  * Added prefer-case-blocks rule
 
 # 0.9.0
 

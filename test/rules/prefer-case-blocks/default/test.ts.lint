@@ -1,0 +1,26 @@
+/**
+Lint test for preferring use of blocks in case statements
+*/
+
+let foo = 10;
+
+switch (foo) {
+   case 1:
+   ~~~~~~~
+      let x = 5;
+~~~~~~~~~~~~~~~~
+      break;
+~~~~~~~~~~~~  [block]
+   case 2:
+   case 3: {
+      let y = 3;
+      break;
+   }
+   default:
+   ~~~~~~~~
+      let z = 2;
+~~~~~~~~~~~~~~~~ [block]
+   }
+}
+
+[block]: Prefer blocks for case body
