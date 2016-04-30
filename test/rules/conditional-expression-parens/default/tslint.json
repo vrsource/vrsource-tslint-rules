@@ -1,0 +1,6 @@
+{
+  "rulesDirectory": "./rules",
+  "rules": {
+    "conditional-expression-parens": true
+  }
+}

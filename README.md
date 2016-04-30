@@ -136,8 +136,20 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ]
 ```
 
+## conditional-expression-parens
+
+Rule to enforce the use of parentheses each clause of a conditional when they
+are not simple expressions of a single indentifier or calling expression.
+
+```javascript
+"conditional-expression-parens": true
+```
 
 # Changelog
+
+# 0.8.0
+
+  * Add conditional-expression-parens rule
 
 # 0.7.0
 

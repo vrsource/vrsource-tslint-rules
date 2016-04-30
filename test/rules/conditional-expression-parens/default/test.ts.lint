@@ -1,0 +1,34 @@
+/**
+Lint test for making sure parens are used with conditional expressions
+*/
+
+let b = true;
+
+let y = 20;
+
+let x = y > 30 ? "left" : "right";
+        ~~~~~~    [cond]
+let x2 = (y > 30 ? "left" : "right");
+          ~~~~~~  [cond]
+
+
+let x = (y > 30);
+
+let z = b ? "left" : "right";
+
+let w = (y > 30) ? "left" : "right";
+
+let w2 = ((y > 30) ? "left" : "right");
+
+let y = doSomething() ? "left" : "right";
+
+x = b ? Object : "string";
+x = b ? [5,6] : {blah: "this"};
+x = b ? 10 : /re/;
+
+x = b ? y + 10 : doSomething() < 20;
+        ~~~~~~                      [cond]
+                 ~~~~~~~~~~~~~~~~~~ [cond]
+
+[cond]: Expression clause must be parenthesized
+
