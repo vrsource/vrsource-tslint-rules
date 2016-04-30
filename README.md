@@ -121,8 +121,27 @@ Rule to enforce a maximum number of parameters for functions and methods.
 ]
 ```
 
+## prefer-literal
+
+Rule to enforce a maximum number of parameters for functions and methods.
+
+Flags locations where code calls "new Object()", "new Array()", "new Function()""
+
+```javascript
+"prefer-literal": [
+    true,
+    "object",
+    "function",
+    "array"
+]
+```
+
 
 # Changelog
+
+# 0.7.0
+
+  * Add prefer-literal rule
 
 # 0.6.0
 

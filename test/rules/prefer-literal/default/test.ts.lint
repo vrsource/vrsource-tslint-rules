@@ -1,0 +1,23 @@
+/**
+Lint test for not using Object, Array, Function constructors.
+*/
+
+let x = new Object();
+        ~~~~~~~~~~~~  [object]
+
+if (x.constructor === Object) {}
+
+let y = new Array();
+        ~~~~~~~~~~~  [array]
+
+if (y.constructor === Array) {}
+
+let z = new Function();
+        ~~~~~~~~~~~~~~  [function]
+
+if (z.constructor === Function) {}
+
+
+[object]: Prefer literal object creation
+[function]: Prefer literal function creation
+[array]: Prefer literal array creation
