@@ -1,8 +1,3 @@
-// Conditional expression - condition must be one of
-// Parenthized expression
-// Call expression
-// Identifier
-
 /*  KEEP IN SYNC with README.md
 
 ## conditional-expression-parens
