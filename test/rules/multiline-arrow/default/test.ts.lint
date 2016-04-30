@@ -1,0 +1,42 @@
+/**
+Lint test of requiring paren and body for multi-line arrow
+*/
+
+let a = [1,2];
+
+a.map( y => y * 2 );
+
+a.map((z) => { return z * 2; });
+
+a.map(c =>
+      ~  [paren]
+  c * 2
+  ~~~~~  [block]
+);
+
+a.map((d) =>
+  d * 2
+  ~~~~~  [block]
+});
+
+a.map(z =>
+      ~    [paren]
+  ({obj: 'literal'})
+  ~~~~~~~~~~~~~~~~~~ [block]
+);
+
+a.map(() => {
+   10
+});
+
+a.map(my_value => {
+      ~~~~~~~~   [paren]
+   my_value * 3;
+});
+
+a.map((f) => {
+   return f * 3; });
+
+
+[paren]: Multi-line arrow function must have parentheses around parameters.
+[block]: Multi-line arrow function must have block around body.

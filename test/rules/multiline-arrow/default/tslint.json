@@ -1,0 +1,10 @@
+{
+  "rulesDirectory": "./rules",
+  "rules": {
+    "multiline-arrow": [
+      true,
+      "require-parens",
+      "require-block"
+    ]
+  }
+}

@@ -87,7 +87,24 @@ Prefer the use of const keyword instead of let for values that are never assigne
 
 note: this rule is copied from the typescript project.
 
+## multiline-arrow
+
+Rule to enforce various checks arrow functions that span multiple lines.
+
+```javascript
+"multiline-arrow": [
+    true,
+    "require-parens",
+    "require-block"
+]
+```
+
+
 # Changelog
+
+# 0.4.0
+
+  * Add multiline-arrow rule
 
 # 0.3.0
 
