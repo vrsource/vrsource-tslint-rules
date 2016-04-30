@@ -27,26 +27,26 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 
 class MultilineArrowRuleWalker extends Lint.RuleWalker {
-    requireParens = false;
-    requireBlock  = false;
+    public requireParens = false;
+    public requireBlock  = false;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
 
-        this.requireParens = contains(options.ruleArguments, 'require-parens');
-        this.requireBlock  = contains(options.ruleArguments,  'require-block');
+        this.requireParens = contains(options.ruleArguments, "require-parens");
+        this.requireBlock  = contains(options.ruleArguments,  "require-block");
     }
 
     protected visitArrowFunction(node: ts.FunctionLikeDeclaration) {
         const text = node.getText();
         const body = node.body;
 
-        const isMultiline = text.indexOf('\n') !== -1;
+        const isMultiline = text.indexOf("\n") !== -1;
 
         if (isMultiline) {
             if (this.requireParens) {
                 // Use simple stupid check that arrow function starts with "("
-                if (text.charAt(0) !== '(') {
+                if (text.charAt(0) !== "(") {
                     const params = node.parameters;
                     const first_param = params[0];
                     const last_param = params[params.length - 1];

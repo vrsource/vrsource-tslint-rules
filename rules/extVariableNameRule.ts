@@ -107,13 +107,13 @@ export class Rule extends Lint.Rules.AbstractRule {
  * Configured with details needed to check a specific variable type.
  */
 class VariableChecker {
-    varTags: string[];
+    public varTags: string[];
 
-    caseCheck:          string  = "";
-    leadingUnderscore:  boolean = false;
-    trailingUnderscore: boolean = false;
-    banKeywords:        boolean = false;
-    regex:              RegExp  = null;
+    public caseCheck:          string  = "";
+    public leadingUnderscore:  boolean = false;
+    public trailingUnderscore: boolean = false;
+    public banKeywords:        boolean = false;
+    public regex:              RegExp  = null;
 
     constructor(opts: any[]) {
         this.varTags = opts.filter(v => contains(VALID_VAR_TAGS, v));
@@ -164,14 +164,14 @@ class VariableChecker {
         }
 
         // check leading and trailing underscore
-        if ('_' === firstCharacter) {
+        if ("_" === firstCharacter) {
             if (!this.leadingUnderscore) {
                 walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), LEADING_FAIL));
             }
             variableName = variableName.slice(1);
         }
 
-        if (('_' === lastCharacter) && (variableName.length > 0)) {
+        if (("_" === lastCharacter) && (variableName.length > 0)) {
             if (!this.trailingUnderscore) {
                 walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), TRAILING_FAIL));
             }
@@ -198,7 +198,7 @@ class VariableChecker {
 
 
 class VariableNameWalker extends Lint.RuleWalker {
-    checkers: VariableChecker[] = [];
+    public checkers: VariableChecker[] = [];
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -341,7 +341,7 @@ function nearestBody(node: ts.Node): {isSourceFile: boolean, containingBody: ts.
         ts.SyntaxKind.FunctionDeclaration,
         ts.SyntaxKind.FunctionExpression,
         ts.SyntaxKind.ArrowFunction,
-        ts.SyntaxKind.MethodDeclaration
+        ts.SyntaxKind.MethodDeclaration,
     ];
     let ancestor = node.parent;
 
@@ -350,8 +350,8 @@ function nearestBody(node: ts.Node): {isSourceFile: boolean, containingBody: ts.
     }
 
     return {
+        containingBody: ancestor,
         isSourceFile: (ancestor && ancestor.kind === ts.SyntaxKind.SourceFile) || !ancestor,
-        containingBody: ancestor
     };
 }
 
@@ -374,7 +374,6 @@ function isPascalCased(name: string) {
 
 function isCamelCase(name: string) {
     const firstCharacter = name.charAt(0);
-    const lastCharacter = name.charAt(name.length - 1);
 
     if (name.length <= 0) {
         return true;
