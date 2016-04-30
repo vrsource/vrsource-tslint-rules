@@ -140,6 +140,20 @@ See: http://eslint.org/docs/rules/no-duplicate-imports
 "no-duplicate-imports": true
 ```
 
+## no-param-reassign
+
+Flag any place where a function parameter is assigned
+a value in the body of a function.
+
+See: eslint no-param-reassign
+
+```javascript
+"no-param-reassign": true
+```
+
+Note: for this rule to work correctly you also need to use `no-shadowed-variable`
+
+
 ## prefer-case-blocks
 
 This rule checks to make sure that all case clauses use a block
@@ -180,6 +194,10 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ```
 
 # Changelog
+
+# 0.11.0
+
+  * Added no-param-reassign rule
 
 # 0.10.0
 

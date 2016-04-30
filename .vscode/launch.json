@@ -7,7 +7,7 @@
 			"request": "launch",
 			"program": "${workspaceRoot}/node_modules/.bin/tslint",
 			"stopOnEntry": false,
-			"args": ["--test", "test/rules/ext-variable-name/default"],
+			"args": ["--test", "test/rules/no-param-reassign/default"],
 			"cwd": "${workspaceRoot}",
 			"preLaunchTask": "build",
 			"runtimeExecutable": null,

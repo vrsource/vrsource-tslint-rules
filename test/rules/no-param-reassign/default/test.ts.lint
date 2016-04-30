@@ -1,0 +1,56 @@
+/**
+Lint test where we should use const if possible
+*/
+function doSomething(param1: string, obj1: Object, obj2: any) {
+    let local1: string = param1;
+    let local2 = {};
+
+    local1 = "set";
+    local2 = 15;
+
+    param1 = "";
+    ~~~~~~  [assign]
+
+    obj1 = {};
+    ~~~~    [assign]
+
+    obj2.nested = 10;
+
+    // this should fail
+    [param1, obj1, local1] = ["other", {}, 10];
+     ~~~~~~           [assign]
+             ~~~~     [assign]
+
+    ({param1, local1} = {param1: 10, local1: 20});
+      ~~~~~~               [assign]
+}
+
+class TestClass {
+    testFunc(p1: string, p2: number, o1: any) {
+        let v1 = 10;
+
+        v1 = 20;
+
+        p1 = "this";
+        ~~    [assign]
+        p2++;
+        ~~    [assign]
+
+        o1.b = 13;
+        o1 = [];
+        ~~    [assign]
+
+        function other_func(nest: any) {
+           nest = 20;
+           ~~~~    [assign]
+        }
+
+        let x = (y) => {
+           y = 10;
+           ~         [assign]
+           return y;
+        };
+    }
+}
+
+[assign]: Attempting to reassign to parameter

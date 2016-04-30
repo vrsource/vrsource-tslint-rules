@@ -1,0 +1,6 @@
+{
+  "rulesDirectory": "./rules",
+  "rules": {
+    "no-param-reassign": true
+  }
+}
