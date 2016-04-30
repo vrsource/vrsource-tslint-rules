@@ -27,6 +27,35 @@ Now configure some of the new rules.
 
 # Rules
 
+## conditional-expression-parens
+
+Rule to enforce the use of parentheses each clause of a conditional when they
+are not simple expressions of a single indentifier or calling expression.
+
+```javascript
+"conditional-expression-parens": true
+```
+
+## dot-notation-rule
+
+In JavaScript, one can access properties using the dot notation (foo.bar)
+or square-bracket notation (foo["bar"]). However, the dot notation is
+often preferred because it is easier to read, less verbose, and works
+better with aggressive JavaScript minimizers.
+
+This rule is aimed at maintaining code consistency and improving code
+readability by encouraging use of the dot notation style whenever possible.
+As such, it will warn when it encounters an unnecessary use
+of square-bracket notation.
+
+See: http://eslint.org/docs/rules/dot-notation
+
+```javascript
+"dot-notation": [
+    true,
+    { "allow-pattern": "^[a-z]+(_[a-z]+)+$" }
+```
+
 ## ext-variable-name
 
 This rule provides extensive support for customizing allowable variable names
@@ -77,15 +106,16 @@ Checks allowed:
    * "ban-keywords": bans a list of language keywords from being used
    * {"regex": "^.*$"}: checks the variable name against the given regex
 
-## prefer-const
+## max-params
 
-Prefer the use of const keyword instead of let for values that are never assigned to
+Rule to enforce a maximum number of parameters for functions and methods.
 
-```json
-"prefer-const": true
+```javascript
+"max-params": [
+    true,
+    3
+]
 ```
-
-note: this rule is copied from the typescript project.
 
 ## multiline-arrow
 
@@ -110,16 +140,16 @@ See: http://eslint.org/docs/rules/no-duplicate-imports
 "no-duplicate-imports": true
 ```
 
-## max-params
+## prefer-const
 
-Rule to enforce a maximum number of parameters for functions and methods.
+Prefer the use of const keyword instead of let for values that are never assigned to
 
-```javascript
-"max-params": [
-    true,
-    3
-]
+```json
+"prefer-const": true
 ```
+
+note: this rule is copied from the typescript project.
+
 
 ## prefer-literal
 
@@ -136,16 +166,11 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ]
 ```
 
-## conditional-expression-parens
-
-Rule to enforce the use of parentheses each clause of a conditional when they
-are not simple expressions of a single indentifier or calling expression.
-
-```javascript
-"conditional-expression-parens": true
-```
-
 # Changelog
+
+# 0.9.0
+
+  * Add dot-notation rule
 
 # 0.8.0
 

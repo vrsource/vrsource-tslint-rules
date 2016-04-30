@@ -1,0 +1,18 @@
+/**
+Lint test for testing dot-notation requirements.
+*/
+
+let y foo = {};
+
+var x = foo["bar"];
+            ~~~~~   [dot]
+
+var s = "bar";
+
+x = foo[bar];
+
+x = foo["under_bar"];
+        ~~~~~~~~~~~   [dot]
+
+
+[dot]: Prefer dot notation access
