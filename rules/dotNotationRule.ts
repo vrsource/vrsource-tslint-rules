@@ -18,6 +18,7 @@ See: http://eslint.org/docs/rules/dot-notation
 "dot-notation": [
     true,
     { "allow-pattern": "^[a-z]+(_[a-z]+)+$" }
+]
 ```
 */
 

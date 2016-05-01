@@ -15,7 +15,7 @@ import * as Lint from "tslint/lib/lint";
  An example set of sub-rules for an example coding standard is shown below.
 
  ```json
- ext-variable-name: [
+ "ext-variable-name": [
    true,
    ["class",                 "pascal"],
    ["interface",             "pascal", {"regex": "^I.*$"}],

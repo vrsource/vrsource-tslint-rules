@@ -54,6 +54,7 @@ See: http://eslint.org/docs/rules/dot-notation
 "dot-notation": [
     true,
     { "allow-pattern": "^[a-z]+(_[a-z]+)+$" }
+]
 ```
 
 ## ext-variable-name
@@ -68,7 +69,7 @@ only one that is used.
 An example set of sub-rules for an example coding standard is shown below.
 
 ```json
-ext-variable-name: [
+"ext-variable-name": [
    true,
    ["class",                 "pascal"],
    ["interface",             "pascal", {"regex": "^I.*$"}],
