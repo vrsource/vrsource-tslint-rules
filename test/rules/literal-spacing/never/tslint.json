@@ -1,0 +1,12 @@
+{
+  "rulesDirectory": "./rules",
+  "rules": {
+    "literal-spacing": [
+       true,
+       {
+         "array": ["never"],
+         "object": ["never"]
+       }
+    ]
+  }
+}

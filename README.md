@@ -107,6 +107,22 @@ Checks allowed:
    * "ban-keywords": bans a list of language keywords from being used
    * {"regex": "^.*$"}: checks the variable name against the given regex
 
+## literal-spacing
+
+Rule to enforce consistent spacing inside array and object literals.
+
+See: eslint: object-curly-spacing and array-bracket-spacing
+
+```javascript
+"literal-spacing": [
+    true,
+    {
+        "array": ["never"],
+        "object": ["always"]
+    }
+]
+```
+
 ## max-params
 
 Rule to enforce a maximum number of parameters for functions and methods.
@@ -196,49 +212,30 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
-# 0.11.0
-
-  * Added no-param-reassign rule
-
-# 0.10.0
-
-  * Added prefer-case-blocks rule
-
-# 0.9.0
-
-  * Add dot-notation rule
-
-# 0.8.0
-
-  * Add conditional-expression-parens rule
-
-# 0.7.0
-
-  * Add prefer-literal rule
-
-# 0.6.0
-
-  * Add max-params rule
-
-# 0.5.0
-
-  * Add no-duplicate-imports
-
-# 0.4.0
-
-  * Add multiline-arrow rule
-
-# 0.3.0
-
-  * Add prefer-const rule
-
-# 0.2.0
-
-  * Remove demonstration rule
-
-# 0.1.0
-
-  * First version
+  * 0.12.0
+    * Added literal-spacing rule
+  * 0.11.0
+    * Added no-param-reassign rule
+  * 0.10.0
+    * Added prefer-case-blocks rule
+  * 0.9.0
+    * Add dot-notation rule
+  * 0.8.0
+    * Add conditional-expression-parens rule
+  * 0.7.0
+    * Add prefer-literal rule
+  * 0.6.0
+    * Add max-params rule
+  * 0.5.0
+    * Add no-duplicate-imports
+  * 0.4.0
+    * Add multiline-arrow rule
+  * 0.3.0
+    * Add prefer-const rule
+  * 0.2.0
+    * Remove demonstration rule
+  * 0.1.0
+    * First version
 
 # Contributing
 

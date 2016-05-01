@@ -1,0 +1,88 @@
+/**
+Lint test for literal-spacing never
+*/
+
+
+// fail for never
+var obj = { 'foo': 'bar' };
+           ~   [never]
+                        ~ [never]
+var obj = {'foo': 'bar' };
+                       ~  [never]
+var obj = { baz: {'foo': 'qux'}, bar};
+           ~  [never]
+var obj = {baz: { 'foo': 'qux'}, bar};
+                 ~  [never]
+var {x } = y;
+      ~  [never]
+import { foo } from 'bar';
+        ~     [never]
+            ~ [never]
+
+// work for never
+var obj = {'foo': 'bar'};
+var obj = {'foo': {'bar': 'baz'}, 'qux': 'quxx'};
+var obj = {
+  'foo': 'bar'
+};
+var obj = {'foo': 'bar'
+};
+var obj = {
+  'foo':'bar'};
+var obj = {};
+var {x} = y;
+import {foo} from 'bar';
+
+// fail for never
+var arr = [ ];
+           ~  [never]
+var arr = [ 'foo', 'bar' ];
+           ~ [never]
+                        ~ [never]
+var arr = ['foo', 'bar' ];
+                       ~  [never]
+var arr = [ ['foo'], 'bar'];
+           ~  [never]
+var arr = [[ 'foo' ], 'bar'];
+            ~        [never]
+                  ~  [never]
+var arr = [ 'foo',
+           ~  [never]
+  'bar'
+];
+var [ x, y ] = z;
+     ~        [never]
+          ~   [never]
+var [ x,y ] = z;
+     ~       [never]
+         ~   [never]
+var [ x, ...y ] = z;
+     ~         [never]
+             ~ [never]
+var [ ,,x, ] = z;
+     ~   [never]
+          ~   [never]
+
+// work for never
+var arr = [];
+var arr = ['foo', 'bar', 'baz'];
+var arr = [['foo'], 'bar', 'baz'];
+var arr = [
+  'foo',
+  'bar',
+  'baz'
+];
+var arr = ['foo',
+  'bar'
+];
+var arr = [
+  'foo',
+  'bar'];
+
+var [x, y] = z;
+var [x,y] = z;
+var [x, ...y] = z;
+var [,,x,] = z;
+
+
+[never]: Found extra space

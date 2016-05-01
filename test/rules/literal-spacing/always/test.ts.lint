@@ -1,0 +1,95 @@
+/**
+Lint test for literal-spacing always
+*/
+
+var obj = {};
+
+// fail always
+var obj = {'foo': 'bar'};
+           ~             [always]
+                       ~ [always]
+var obj = {'foo': 'bar' };
+           ~   [always]
+var obj = { baz: {'foo': 'qux'}, bar};
+                  ~   [always]
+                              ~ [always]
+                                    ~ [always]
+var obj = {baz: { 'foo': 'qux' }, bar};
+           ~  [always]
+                                     ~ [always]
+var obj = {'foo': 'bar'
+           ~  [always]
+};
+var obj = {
+  'foo':'bar'};
+             ~  [always]
+var {x} = y;
+     ~ [always]
+      ~ [always]
+import {foo } from 'bar';
+        ~ [always]
+
+// pass always
+var obj = {};
+var obj = { 'foo': 'bar' };
+var obj = { 'foo': { 'bar': 'baz' }, 'qux': 'quxx' };
+var obj = {
+  'foo': 'bar'
+};
+var { x } = y;
+import { foo } from 'bar';
+
+// fail always
+var arr = ['foo', 'bar'];
+           ~  [always]
+                       ~  [always]
+var arr = ['foo', 'bar' ];
+           ~  [always]
+var arr = [ ['foo'], 'bar' ];
+             ~  [always]
+                  ~  [always]
+var arr = ['foo',
+           ~  [always]
+  'bar'
+];
+var arr = [
+  'foo',
+  'bar'];
+       ~  [always]
+
+var [x, y] = z;
+     ~  [always]
+         ~  [always]
+var [x,y] = z;
+     ~  [always]
+        ~  [always]
+var [x, ...y] = z;
+     ~  [always]
+            ~  [always]
+var [,,x,] = z;
+     ~  [always]
+         ~  [always]
+
+// pass always
+var arr = [];
+var arr = [ 'foo', 'bar', 'baz' ];
+var arr = [ [ 'foo' ], 'bar', 'baz' ];
+var arr = [ 'foo',
+  'bar'
+];
+var arr = [
+  'foo',
+  'bar' ];
+var arr = [
+  'foo',
+  'bar',
+  'baz'
+];
+
+var [ x, y ] = z;
+var [ x,y ] = z;
+var [ x, ...y ] = z;
+var [ ,,x, ] = z;
+
+
+[always]: Missing whitespace
