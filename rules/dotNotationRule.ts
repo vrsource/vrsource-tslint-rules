@@ -35,6 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class PreferLiteralWalker extends Lint.RuleWalker {
     public allowedPattern: RegExp = null;
+    protected validIdPattern = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
@@ -51,13 +52,31 @@ class PreferLiteralWalker extends Lint.RuleWalker {
         let argExp = node.argumentExpression;
 
         if (argExp.kind === ts.SyntaxKind.StringLiteral) {
-            let text = (argExp as ts.StringLiteral).getText();
-            if ((!this.allowedPattern) || !text.match(this.allowedPattern)) {
-                this.addFailure(this.createFailure(argExp.getStart(), argExp.getWidth(), FAIL_STR));
+            let text = (argExp as ts.StringLiteral).text;
+            const is_valid_id = this.validIdPattern.test(text);
+
+            if (is_valid_id) {
+                const allow_anyway = (this.allowedPattern != null) && this.allowedPattern.test(text);
+                if (!allow_anyway) {
+                    this.addFailure(this.createFailure(argExp.getStart(), argExp.getWidth(), FAIL_STR));
+                }
             }
         }
 
         this.walkChildren(node);
+    }
+
+    protected stripQuotes(text: string): string {
+        let res = text;
+        let is_quote = (v) => (v[0] === '"' || v[0] === "'");
+
+        if (is_quote(res[0])) {
+            res = res.slice(1);
+        }
+        if (is_quote(res[res.length - 1])) {
+            res = res.slice(0, -1);
+        }
+        return res;
     }
 }
 

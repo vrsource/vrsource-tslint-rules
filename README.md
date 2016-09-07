@@ -212,6 +212,8 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 0.12.1
+    * Fix bug in dot-notation where invalid identifiers were not allowed.
   * 0.12.0
     * Added literal-spacing rule
   * 0.11.0
@@ -252,6 +254,7 @@ To add a new rule:
   - Add one or more tests in the test/rules directory
   - Use run_tests.sh to build and run the tests
   - (optional) The .vscode directory includes settings to run and debug rules in vscode.
+     - Just modify the "args" entry to point to the rule test case to run
 
 Notes for how to build new rules and tests:
 
