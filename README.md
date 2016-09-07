@@ -197,8 +197,6 @@ note: this rule is copied from the typescript project.
 
 ## prefer-literal
 
-Rule to enforce a maximum number of parameters for functions and methods.
-
 Flags locations where code calls "new Object()", "new Array()", "new Function()""
 
 ```javascript
