@@ -170,6 +170,13 @@ See: eslint no-param-reassign
 
 Note: for this rule to work correctly you also need to use `no-shadowed-variable`
 
+## no-jasmine-focus
+
+Flags any place developers left fit or fdescribe calls in their code.
+
+```javascript
+"no-jasmine-focus": true
+```
 
 ## prefer-case-blocks
 
@@ -210,6 +217,8 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 0.13.0
+    * Add no-jasmine-focus rule.
   * 0.12.1
     * Fix bug in dot-notation where invalid identifiers were not allowed.
   * 0.12.0
@@ -257,6 +266,7 @@ To add a new rule:
 Notes for how to build new rules and tests:
 
   - http://palantir.github.io/tslint/develop/custom-rules/
+     - https://github.com/palantir/tslint/blob/master/src/language/walker/syntaxWalker.ts
   - http://palantir.github.io/tslint/develop/testing-rules/
 
 ## Resources
