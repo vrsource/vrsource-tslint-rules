@@ -288,6 +288,7 @@ class VariableNameWalker extends Lint.RuleWalker {
 
     protected checkName(name: ts.Identifier, walker: Lint.RuleWalker, varTags: string[]) {
         let matching_checker = this.getMatchingChecker(varTags);
+
         if (matching_checker !== null) {
             matching_checker.checkName(name, walker);
         }
@@ -312,12 +313,16 @@ class VariableNameWalker extends Lint.RuleWalker {
             tags.push(CONST_TAG);
         }
 
-        if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
-            tags.push(PRIVATE_TAG);
-        } else if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword)) {
-            tags.push(PROTECTED_TAG);
-        } else {
-            tags.push(PUBLIC_TAG);
+        if ((node.kind === ts.SyntaxKind.PropertyDeclaration) ||
+            (node.kind === ts.SyntaxKind.MethodDeclaration)) {
+            if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
+                tags.push(PRIVATE_TAG);
+            } else if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword)) {
+                tags.push(PROTECTED_TAG);
+            } else {
+                // xxx: should fix so only get public when it is a property
+                tags.push(PUBLIC_TAG);
+            }
         }
 
         let nearest_body = nearestBody(node);
@@ -342,6 +347,7 @@ function nearestBody(node: ts.Node): {isSourceFile: boolean, containingBody: ts.
         ts.SyntaxKind.FunctionExpression,
         ts.SyntaxKind.ArrowFunction,
         ts.SyntaxKind.MethodDeclaration,
+        ts.SyntaxKind.Constructor,
     ];
     let ancestor = node.parent;
 

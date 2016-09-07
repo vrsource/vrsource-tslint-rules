@@ -86,6 +86,22 @@ class StaticClass {
            ~~~~~~~~~~~   [pascal]
 }
 
+class BaseClass {
+    constructor() {
+       const lower_const = 10;
+       const short = "string";
+       let localCamel = 10;
+           ~~~~~~~~~~  [snake]
+    }
+
+    doSomething(): void {
+       let lower_const = 10;
+       let short = "string";
+       let localCamel = 10;
+           ~~~~~~~~~~  [snake]
+    }
+}
+
 function testParams(goodParam, bad_param, _badLead, badTrail_) {}
                                ~~~~~~~~~                       [camel]
                                           ~~~~~~~~             [lead]
