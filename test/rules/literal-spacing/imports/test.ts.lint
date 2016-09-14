@@ -1,0 +1,25 @@
+/**
+Lint test for mix where objects are never and imports are always
+*/
+
+import {Blah, Other} from 'my/module';
+        ~              [missing]
+                   ~  [missing]
+
+import { Good, Stuff } from 'my/module2';
+
+import {
+  Multi,
+  Line,
+} from 'my/module3';
+
+// fail for never
+var obj = { 'foo': 'bar' };
+           ~   [never]
+                        ~ [never]
+var obj = {'foo': 'bar' };
+                       ~  [never]
+
+
+[never]: Found extra space
+[missing]: Missing whitespace

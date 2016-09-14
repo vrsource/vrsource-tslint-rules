@@ -6,7 +6,7 @@
        {
          "array": ["never"],
          "object": ["never"],
-         "import": ["never"]
+         "import": ["always"]
        }
     ]
   }

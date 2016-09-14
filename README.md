@@ -117,8 +117,9 @@ See: eslint: object-curly-spacing and array-bracket-spacing
 "literal-spacing": [
     true,
     {
-        "array": ["never"],
-        "object": ["always"]
+        "array": ["always"],
+        "object": ["never"],
+        "import": ["always"]
     }
 ]
 ```

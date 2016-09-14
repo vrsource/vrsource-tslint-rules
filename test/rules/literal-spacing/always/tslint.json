@@ -5,7 +5,8 @@
        true,
        {
          "array": ["always"],
-         "object": ["always"]
+         "object": ["always"],
+         "import": ["always"]
        }
     ]
   }

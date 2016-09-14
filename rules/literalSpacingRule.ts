@@ -10,8 +10,9 @@ See: eslint: object-curly-spacing and array-bracket-spacing
 "literal-spacing": [
     true,
     {
-        "array": ["never"],
-        "object": ["always"]
+        "array": ["always"],
+        "object": ["never"],
+        "import": ["always"]
     }
 ]
 ```
@@ -33,17 +34,20 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class LiteralSpacingRuleWalker extends Lint.RuleWalker {
-    public arrayCheck: string = NEVER_OPT;
-    public objCheck: string   = NEVER_OPT;
+    public arrayCheck:  string = NEVER_OPT;
+    public objCheck:    string = NEVER_OPT;
+    public importCheck: string = NEVER_OPT;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
         super(sourceFile, options);
 
-        let array_opts = this.getOption("array", []);
-        let obj_opts   = this.getOption("object", []);
+        let array_opts  = this.getOption("array", []);
+        let obj_opts    = this.getOption("object", []);
+        let import_opts = this.getOption("import", []);
 
-        this.arrayCheck = contains(array_opts, ALWAYS_OPT) ? ALWAYS_OPT : NEVER_OPT;
-        this.objCheck   = contains(obj_opts,   ALWAYS_OPT) ? ALWAYS_OPT : NEVER_OPT;
+        this.arrayCheck  = contains(array_opts,  ALWAYS_OPT) ? ALWAYS_OPT : NEVER_OPT;
+        this.objCheck    = contains(obj_opts,    ALWAYS_OPT) ? ALWAYS_OPT : NEVER_OPT;
+        this.importCheck = contains(import_opts, ALWAYS_OPT) ? ALWAYS_OPT : NEVER_OPT;
     }
 
     protected getOption(option: string, defVal: any) {
@@ -71,7 +75,7 @@ class LiteralSpacingRuleWalker extends Lint.RuleWalker {
     }
 
     protected visitNamedImports(node: ts.NamedImports) {
-        this.lintNode(node, this.objCheck);
+        this.lintNode(node, this.importCheck);
         super.visitNamedImports(node);
     }
 
