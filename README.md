@@ -218,6 +218,8 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 0.14.1
+    * Add import options to literal-spacing rule
   * 0.13.1
     * Fix bugs in ext-variable-name rule.
        * variables in constructors didn't get the 'local' tag
