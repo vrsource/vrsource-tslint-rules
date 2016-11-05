@@ -263,6 +263,22 @@ class VariableNameWalker extends Lint.RuleWalker {
         super.visitPropertyDeclaration(node);
     }
 
+    public visitSetAccessor(node: ts.SetAccessorDeclaration) {
+        if (node.name != null && node.name.kind === ts.SyntaxKind.Identifier) {
+            const identifier = <ts.Identifier> node.name;
+            this.checkName(identifier, this, this.getNodeTags(node, PROPERTY_TAG));
+        }
+        super.visitSetAccessor(node);
+    }
+
+    public visitGetAccessor(node: ts.GetAccessorDeclaration) {
+        if (node.name != null && node.name.kind === ts.SyntaxKind.Identifier) {
+            const identifier = <ts.Identifier> node.name;
+            this.checkName(identifier, this, this.getNodeTags(node, PROPERTY_TAG));
+        }
+        super.visitGetAccessor(node);
+    }
+
     public visitVariableDeclaration(node: ts.VariableDeclaration) {
         if (node.name.kind === ts.SyntaxKind.Identifier) {
             const identifier = <ts.Identifier> node.name;
@@ -314,6 +330,8 @@ class VariableNameWalker extends Lint.RuleWalker {
         }
 
         if ((node.kind === ts.SyntaxKind.PropertyDeclaration) ||
+            (node.kind === ts.SyntaxKind.SetAccessor) ||
+            (node.kind === ts.SyntaxKind.GetAccessor) ||
             (node.kind === ts.SyntaxKind.MethodDeclaration)) {
             if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
                 tags.push(PRIVATE_TAG);

@@ -60,6 +60,19 @@ class TestClass {
     public camelPub = 10;
            ~~~~~~~~  [snake]
     other_pub = 20;
+
+    public get camelPubAcc() {}
+               ~~~~~~~~~~~  [snake]
+    public set camelPubAcc(x) {}
+               ~~~~~~~~~~~  [snake]
+    private get snake_priv_acc() {}
+                ~~~~~~~~~~~~~~  [camel]
+    private set snake_priv_acc(x) {}
+                ~~~~~~~~~~~~~~  [camel]
+    protected get snake_prot_acc() {}
+                  ~~~~~~~~~~~~~~ [camel]
+    protected set snake_prot_acc(x) {}
+                  ~~~~~~~~~~~~~~ [camel]
 }
 
 class AnotherClass {
