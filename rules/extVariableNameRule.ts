@@ -212,78 +212,48 @@ class VariableNameWalker extends Lint.RuleWalker {
 
     public visitClassDeclaration(node: ts.ClassDeclaration) {
         // classes declared as default exports will be unnamed
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, CLASS_TAG));
-        }
-
+        this.checkName(node, CLASS_TAG);
         super.visitClassDeclaration(node);
     }
 
     public visitMethodDeclaration(node: ts.MethodDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, METHOD_TAG));
-        }
-
+        this.checkName(node, METHOD_TAG);
         super.visitMethodDeclaration(node);
     }
 
     public visitInterfaceDeclaration(node: ts.InterfaceDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, INTERFACE_TAG));
-        }
-
+        this.checkName(node, INTERFACE_TAG);
         super.visitInterfaceDeclaration(node);
     }
 
     // what is this?
     public visitBindingElement(node: ts.BindingElement) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, VARIABLE_TAG));
-        }
+        this.checkName(node, VARIABLE_TAG);
         super.visitBindingElement(node);
     }
 
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, PARAMETER_TAG));
-        }
+        this.checkName(node, PARAMETER_TAG);
         super.visitParameterDeclaration(node);
     }
 
     public visitPropertyDeclaration(node: ts.PropertyDeclaration) {
-        if (node.name != null && node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, PROPERTY_TAG));
-        }
+        this.checkName(node, PROPERTY_TAG);
         super.visitPropertyDeclaration(node);
     }
 
     public visitSetAccessor(node: ts.SetAccessorDeclaration) {
-        if (node.name != null && node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, PROPERTY_TAG));
-        }
+            this.checkName(node, PROPERTY_TAG);
         super.visitSetAccessor(node);
     }
 
     public visitGetAccessor(node: ts.GetAccessorDeclaration) {
-        if (node.name != null && node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, PROPERTY_TAG));
-        }
+        this.checkName(node, PROPERTY_TAG);
         super.visitGetAccessor(node);
     }
 
     public visitVariableDeclaration(node: ts.VariableDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, VARIABLE_TAG));
-        }
+        this.checkName(node, VARIABLE_TAG);
         super.visitVariableDeclaration(node);
     }
 
@@ -295,18 +265,16 @@ class VariableNameWalker extends Lint.RuleWalker {
     }
 
     public visitFunctionDeclaration(node: ts.FunctionDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, FUNCTION_TAG));
-        }
+        this.checkName(node, FUNCTION_TAG);
         super.visitFunctionDeclaration(node);
     }
 
-    protected checkName(name: ts.Identifier, walker: Lint.RuleWalker, varTags: string[]) {
-        let matching_checker = this.getMatchingChecker(varTags);
-
-        if (matching_checker !== null) {
-            matching_checker.checkName(name, walker);
+    protected checkName(node: ts.Declaration, tag: string) {
+        if (node.name.kind === ts.SyntaxKind.Identifier) {
+            const matching_checker = this.getMatchingChecker(this.getNodeTags(node, tag));
+            if (matching_checker !== null) {
+                matching_checker.checkName(<ts.Identifier> node.name, this);
+            }
         }
     }
 
