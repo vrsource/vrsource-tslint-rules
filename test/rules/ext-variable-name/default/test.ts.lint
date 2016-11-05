@@ -4,75 +4,75 @@ Lint test where everything should be in camel case
 
 var moduleCamel  = "camel";
 var ModulePascal = "pascal";
-    ~~~~~~~~~~~~    [camel]
+    ~~~~~~~~~~~~    [Variable must be in camel case]
 const MODULE_CONST  = "const"
 const another_const = "const"
-      ~~~~~~~~~~~~~ [upper]
+      ~~~~~~~~~~~~~ [Variable must be in uppercase]
 var _noLeading = "";
-    ~~~~~~~~~~  [lead]
+    ~~~~~~~~~~  [Variable name must not have leading underscore]
 var trailing_ = "";
-    ~~~~~~~~~   [trail]
+    ~~~~~~~~~   [Variable name must not have trailing underscore]
 
 function varScope() {
     let localCamel = 10;
-        ~~~~~~~~~~  [snake]
+        ~~~~~~~~~~  [Variable must be in snake case]
     let local_snake = 20;
 
     function local_func() {}
     function localFunc() {}
-             ~~~~~~~~~  [snake]
+             ~~~~~~~~~  [Function must be in snake case]
 }
 
 function snake_func() {}
-         ~~~~~~~~~~  [camel]
+         ~~~~~~~~~~  [Function must be in camel case]
 
 class camelClass {}
-      ~~~~~~~~~~ [pascal]
+      ~~~~~~~~~~ [Class must be in pascal case]
 class UPPER_CLASS {}
-      ~~~~~~~~~~~ [pascal]
+      ~~~~~~~~~~~ [Class must be in pascal case]
 
 function innerScope() {
     class goodCamel {}
     class BadPascal {}
-          ~~~~~~~~~ [camel]
+          ~~~~~~~~~ [Class must be in camel case]
 }
 
 interface PascalIface {}
-          ~~~~~~~~~~~ [regex]
+          ~~~~~~~~~~~ [Interface name did not match required regex]
 interface IPascalIface {}
 
 class TestClass {
     private privCamel = 10;
     private _leadPriv = 10;
     private trailPriv_ = 10;
-            ~~~~~~~~~~  [trail]
+            ~~~~~~~~~~  [Property name must not have trailing underscore]
     private snake_priv = 10;
-            ~~~~~~~~~~  [camel]
+            ~~~~~~~~~~  [Property must be in camel case]
 
     protected protCamel = 10;
     protected _leadProt = 10;
-              ~~~~~~~~~  [lead]
+              ~~~~~~~~~  [Property name must not have leading underscore]
     protected trailProt_ = 10;
     protected snake_prot = 10;
-              ~~~~~~~~~~ [camel]
+              ~~~~~~~~~~ [Property must be in camel case]
 
     public snake_pub = 10;
     public camelPub = 10;
-           ~~~~~~~~  [snake]
+           ~~~~~~~~  [Property must be in snake case]
     other_pub = 20;
 
     public get camelPubAcc() {}
-               ~~~~~~~~~~~  [snake]
+               ~~~~~~~~~~~  [Property must be in snake case]
     public set camelPubAcc(x) {}
-               ~~~~~~~~~~~  [snake]
+               ~~~~~~~~~~~  [Property must be in snake case]
     private get snake_priv_acc() {}
-                ~~~~~~~~~~~~~~  [camel]
+                ~~~~~~~~~~~~~~  [Property must be in camel case]
     private set snake_priv_acc(x) {}
-                ~~~~~~~~~~~~~~  [camel]
+                ~~~~~~~~~~~~~~  [Property must be in camel case]
     protected get snake_prot_acc() {}
-                  ~~~~~~~~~~~~~~ [camel]
+                  ~~~~~~~~~~~~~~ [Property must be in camel case]
     protected set snake_prot_acc(x) {}
-                  ~~~~~~~~~~~~~~ [camel]
+                  ~~~~~~~~~~~~~~ [Property must be in camel case]
 }
 
 class AnotherClass {
@@ -81,22 +81,22 @@ class AnotherClass {
 
     protected snake_method_() {}
     protected camelProt() {}
-              ~~~~~~~~~  [snake]
+              ~~~~~~~~~  [Method must be in snake case]
 
     private _PascalPriv() {}
     private snake_priv_() {}
-            ~~~~~~~~~~~  [pascal]
-            ~~~~~~~~~~~  [trail]
+            ~~~~~~~~~~~  [Method must be in pascal case]
+            ~~~~~~~~~~~  [Method name must not have trailing underscore]
 }
 
 class StaticClass {
     static const UPPER_CONST = 10;
     static const PascalConst = 20;
-                 ~~~~~~~~~~~  [upper]
+                 ~~~~~~~~~~~  [Property must be in uppercase]
 
     static StaticConst = 20;
     static snake_const = 10;
-           ~~~~~~~~~~~   [pascal]
+           ~~~~~~~~~~~   [Property must be in pascal case]
 }
 
 class BaseClass {
@@ -104,33 +104,23 @@ class BaseClass {
        const lower_const = 10;
        const short = "string";
        let localCamel = 10;
-           ~~~~~~~~~~  [snake]
+           ~~~~~~~~~~  [Variable must be in snake case]
     }
 
     doSomething(): void {
        let lower_const = 10;
        let short = "string";
        let localCamel = 10;
-           ~~~~~~~~~~  [snake]
+           ~~~~~~~~~~  [Variable must be in snake case]
     }
 }
 
 function testParams(goodParam, bad_param, _badLead, badTrail_) {}
-                               ~~~~~~~~~                       [camel]
-                                          ~~~~~~~~             [lead]
-                                                    ~~~~~~~~~  [trail]
+                               ~~~~~~~~~                       [Parameter must be in camel case]
+                                          ~~~~~~~~             [Parameter name must not have leading underscore]
+                                                    ~~~~~~~~~  [Parameter name must not have trailing underscore]
 let { foo, bar } = { foo: 1, bar: 2 };
 let [ InvalidFoo, invalid_bar, ...invalid_baz ] =  [1, 2, 3, 4];
-      ~~~~~~~~~~                              [camel]
-                  ~~~~~~~~~~~                 [camel]
-                                  ~~~~~~~~~~~ [camel]
-
-
-[lead]: Variable name must not have leading underscore
-[camel]: Variable must be in camel case
-[pascal]: Variable must be in pascal case
-[snake]: Variable must be in snake case
-[upper]: Variable must be in uppercase
-[ban]: Variable name clashes with keyword/type
-[trail]: Variable name must not have trailing underscore
-[regex]: Variable name did not match required regex
+      ~~~~~~~~~~                              [Variable must be in camel case]
+                  ~~~~~~~~~~~                 [Variable must be in camel case]
+                                  ~~~~~~~~~~~ [Variable must be in camel case]

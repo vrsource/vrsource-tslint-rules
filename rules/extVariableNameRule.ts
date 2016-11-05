@@ -83,14 +83,14 @@ const LEADING_UNDERSCORE_OPTION  = "allow-leading-underscore";
 const TRAILING_UNDERSCORE_OPTION = "allow-trailing-underscore";
 const BAN_KEYWORDS_OPTION        = "ban-keywords";
 
-const CAMEL_FAIL    = "Variable must be in camel case";
-const PASCAL_FAIL   = "Variable must be in pascal case";
-const SNAKE_FAIL    = "Variable must be in snake case";
-const UPPER_FAIL    = "Variable must be in uppercase";
-const KEYWORD_FAIL  = "Variable name clashes with keyword/type";
-const LEADING_FAIL  = "Variable name must not have leading underscore";
-const TRAILING_FAIL = "Variable name must not have trailing underscore";
-const REGEX_FAIL    = "Variable name did not match required regex";
+const CAMEL_FAIL    = "must be in camel case";
+const PASCAL_FAIL   = "must be in pascal case";
+const SNAKE_FAIL    = "must be in snake case";
+const UPPER_FAIL    = "must be in uppercase";
+const KEYWORD_FAIL  = "name clashes with keyword/type";
+const LEADING_FAIL  = "name must not have leading underscore";
+const TRAILING_FAIL = "name must not have trailing underscore";
+const REGEX_FAIL    = "name did not match required regex";
 
 const BANNED_KEYWORDS = ["any", "Number", "number", "String", "string",
                          "Boolean", "boolean", "Undefined", "undefined"];
@@ -153,45 +153,57 @@ class VariableChecker {
         return matches;
     }
 
-    public checkName(name: ts.Identifier, walker: Lint.RuleWalker) {
+    protected failMessage(failMessage: string, tag: string) {
+        return tag[0].toUpperCase() + tag.substr(1) + " " + failMessage;
+    }
+
+    public checkName(name: ts.Identifier, walker: Lint.RuleWalker, tag: string) {
         let variableName     = name.text;
-        const firstCharacter = variableName.charAt(0);
-        const lastCharacter  = variableName.charAt(variableName.length - 1);
+        const firstCharacter = variableName[0];
+        const lastCharacter  = variableName[variableName.length - 1];
 
         // start with regex test before we potentially strip off underscores
         if ((this.regex !== null) && !variableName.match(this.regex)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), REGEX_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(REGEX_FAIL, tag)));
         }
 
         // check leading and trailing underscore
         if ("_" === firstCharacter) {
             if (!this.leadingUnderscore) {
-                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), LEADING_FAIL));
+                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                                  this.failMessage(LEADING_FAIL, tag)));
             }
             variableName = variableName.slice(1);
         }
 
         if (("_" === lastCharacter) && (variableName.length > 0)) {
             if (!this.trailingUnderscore) {
-                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), TRAILING_FAIL));
+                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                                  this.failMessage(TRAILING_FAIL, tag)));
             }
-            variableName = variableName.slice(0,-1);
+            variableName = variableName.slice(0, -1);
         }
 
         // check banned words
         if (this.banKeywords && contains(BANNED_KEYWORDS, variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), KEYWORD_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(KEYWORD_FAIL, tag)));
         }
 
         // run case checks
         if ((PASCAL_OPTION === this.caseCheck) && !isPascalCased(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), PASCAL_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(PASCAL_FAIL, tag)));
         } else if ((CAMEL_OPTION === this.caseCheck) && !isCamelCase(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), CAMEL_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(CAMEL_FAIL, tag)));
         } else if ((SNAKE_OPTION === this.caseCheck) && !isSnakeCase(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), SNAKE_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(SNAKE_FAIL, tag)));
         } else if ((UPPER_OPTION === this.caseCheck) && !isUpperCase(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), UPPER_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(UPPER_FAIL, tag)));
         }
     }
 }
@@ -273,7 +285,7 @@ class VariableNameWalker extends Lint.RuleWalker {
         if (node.name.kind === ts.SyntaxKind.Identifier) {
             const matching_checker = this.getMatchingChecker(this.getNodeTags(node, tag));
             if (matching_checker !== null) {
-                matching_checker.checkName(<ts.Identifier> node.name, this);
+                matching_checker.checkName(<ts.Identifier> node.name, this, tag);
             }
         }
     }
