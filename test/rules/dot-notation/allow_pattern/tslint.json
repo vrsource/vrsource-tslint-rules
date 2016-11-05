@@ -1,5 +1,5 @@
 {
-  "rulesDirectory": "./rules",
+  "rulesDirectory": "../../../../rules",
   "rules": {
     "dot-notation": [
       true,
