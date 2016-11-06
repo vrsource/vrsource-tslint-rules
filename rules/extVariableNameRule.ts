@@ -50,6 +50,8 @@ Checks allowed:
       * "upper": Require variables to use UPPER_CASE_VARIABLES
    * "allow-leading-underscore": permits the variable to have a leading underscore
    * "allow-trailing-underscore": permits the variable to have a trailing underscore
+   * "require-leading-underscore": requires the variable to have a leading underscore
+   * "require-trailing-underscore": requires the variable to have a trailing underscore
    * "ban-keywords": bans a list of language keywords from being used
    * {"regex": "^.*$"}: checks the variable name against the given regex
 
@@ -79,9 +81,11 @@ const PASCAL_OPTION = "pascal";
 const CAMEL_OPTION  = "camel";
 const SNAKE_OPTION  = "snake";
 const UPPER_OPTION  = "upper";
-const LEADING_UNDERSCORE_OPTION  = "allow-leading-underscore";
-const TRAILING_UNDERSCORE_OPTION = "allow-trailing-underscore";
-const BAN_KEYWORDS_OPTION        = "ban-keywords";
+const ALLOW_LEADING_UNDERSCORE_OPTION    = "allow-leading-underscore";
+const ALLOW_TRAILING_UNDERSCORE_OPTION   = "allow-trailing-underscore";
+const REQUIRE_LEADING_UNDERSCORE_OPTION  = "require-leading-underscore";
+const REQUIRE_TRAILING_UNDERSCORE_OPTION = "require-trailing-underscore";
+const BAN_KEYWORDS_OPTION                = "ban-keywords";
 
 const CAMEL_FAIL    = "must be in camel case";
 const PASCAL_FAIL   = "must be in pascal case";
@@ -90,6 +94,8 @@ const UPPER_FAIL    = "must be in uppercase";
 const KEYWORD_FAIL  = "name clashes with keyword/type";
 const LEADING_FAIL  = "name must not have leading underscore";
 const TRAILING_FAIL = "name must not have trailing underscore";
+const NO_LEADING_FAIL  = "name must have leading underscore";
+const NO_TRAILING_FAIL = "name must have trailing underscore";
 const REGEX_FAIL    = "name did not match required regex";
 
 const BANNED_KEYWORDS = ["any", "Number", "number", "String", "string",
@@ -110,8 +116,10 @@ class VariableChecker {
     public varTags: string[];
 
     public caseCheck:          string  = "";
-    public leadingUnderscore:  boolean = false;
-    public trailingUnderscore: boolean = false;
+    public allowLeadingUnderscore:  boolean = false;
+    public allowTrailingUnderscore: boolean = false;
+    public requireLeadingUnderscore:  boolean = false;
+    public requireTrailingUnderscore: boolean = false;
     public banKeywords:        boolean = false;
     public regex:              RegExp  = null;
 
@@ -128,8 +136,10 @@ class VariableChecker {
             this.caseCheck = UPPER_OPTION;
         }
 
-        this.leadingUnderscore  = contains(opts, LEADING_UNDERSCORE_OPTION);
-        this.trailingUnderscore = contains(opts, TRAILING_UNDERSCORE_OPTION);
+        this.allowLeadingUnderscore  = contains(opts, ALLOW_LEADING_UNDERSCORE_OPTION);
+        this.allowTrailingUnderscore = contains(opts, ALLOW_TRAILING_UNDERSCORE_OPTION);
+        this.requireLeadingUnderscore  = contains(opts, REQUIRE_LEADING_UNDERSCORE_OPTION);
+        this.requireTrailingUnderscore = contains(opts, REQUIRE_TRAILING_UNDERSCORE_OPTION);
         this.banKeywords        = contains(opts, BAN_KEYWORDS_OPTION);
 
         opts.forEach((opt) => {
@@ -168,27 +178,33 @@ class VariableChecker {
                               this.failMessage(REGEX_FAIL, tag)));
         }
 
+        // check banned words before we potentially strip off underscores
+        if (this.banKeywords && contains(BANNED_KEYWORDS, variableName)) {
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(KEYWORD_FAIL, tag)));
+        }
+
         // check leading and trailing underscore
         if ("_" === firstCharacter) {
-            if (!this.leadingUnderscore) {
+            if (!this.allowLeadingUnderscore && !this.requireLeadingUnderscore) {
                 walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
                                   this.failMessage(LEADING_FAIL, tag)));
             }
             variableName = variableName.slice(1);
+        } else if (this.requireLeadingUnderscore) {
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(NO_LEADING_FAIL, tag)));
         }
 
         if (("_" === lastCharacter) && (variableName.length > 0)) {
-            if (!this.trailingUnderscore) {
+            if (!this.allowTrailingUnderscore && !this.requireTrailingUnderscore) {
                 walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
                                   this.failMessage(TRAILING_FAIL, tag)));
             }
             variableName = variableName.slice(0, -1);
-        }
-
-        // check banned words
-        if (this.banKeywords && contains(BANNED_KEYWORDS, variableName)) {
+        } else if (this.requireTrailingUnderscore) {
             walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
-                              this.failMessage(KEYWORD_FAIL, tag)));
+                              this.failMessage(NO_TRAILING_FAIL, tag)));
         }
 
         // run case checks

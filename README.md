@@ -75,12 +75,12 @@ An example set of sub-rules for an example coding standard is shown below.
    ["interface",             "pascal", {"regex": "^I.*$"}],
    ["parameter",             "camel"],
    ["property", "static",    "camel", {"regex": "^s.*$"}],
-   ["property", "private",   "camel", "allow-leading-underscore"],
+   ["property", "private",   "camel", "require-leading-underscore"],
    ["property", "protected", "camel", "allow-leading-underscore"],
    ["variable", "local",     "snake"],
    ["variable", "const",     "upper"],
    ["variable",              "camel", {"regex": "^g.*$"}],
-   ["method", "private",     "camel", "allow-leading-underscore"],
+   ["method", "private",     "camel", "require-leading-underscore"],
    ["method", "protected",   "camel", "allow-leading-underscore"],
    ["function",              "camel"],
    ["default",               "camel"]
@@ -104,6 +104,8 @@ Checks allowed:
       * "upper": Require variables to use UPPER_CASE_VARIABLES
    * "allow-leading-underscore": permits the variable to have a leading underscore
    * "allow-trailing-underscore": permits the variable to have a trailing underscore
+   * "require-leading-underscore": requires the variable to have a leading underscore
+   * "require-trailing-underscore": requires the variable to have a trailing underscore
    * "ban-keywords": bans a list of language keywords from being used
    * {"regex": "^.*$"}: checks the variable name against the given regex
 

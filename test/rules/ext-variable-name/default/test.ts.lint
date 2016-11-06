@@ -12,11 +12,17 @@ var _noLeading = "";
     ~~~~~~~~~~  [Variable name must not have leading underscore]
 var trailing_ = "";
     ~~~~~~~~~   [Variable name must not have trailing underscore]
+var number = 42;
+    ~~~~~~      [Variable name clashes with keyword/type]
 
 function varScope() {
     let localCamel = 10;
         ~~~~~~~~~~  [Variable must be in snake case]
+        ~~~~~~~~~~  [Variable name must have leading underscore]
     let local_snake = 20;
+        ~~~~~~~~~~~ [Variable name must have leading underscore]
+    let _good_local = 42;
+    let _number = 42; //allowed because of leading underscore
 
     function local_func() {}
     function localFunc() {}
@@ -63,15 +69,15 @@ class TestClass {
 
     public get camelPubAcc() {}
                ~~~~~~~~~~~  [Property must be in snake case]
-    public set camelPubAcc(x) {}
+    public set camelPubAcc(var_) {}
                ~~~~~~~~~~~  [Property must be in snake case]
     private get snake_priv_acc() {}
                 ~~~~~~~~~~~~~~  [Property must be in camel case]
-    private set snake_priv_acc(x) {}
+    private set snake_priv_acc(var_) {}
                 ~~~~~~~~~~~~~~  [Property must be in camel case]
     protected get snake_prot_acc() {}
                   ~~~~~~~~~~~~~~ [Property must be in camel case]
-    protected set snake_prot_acc(x) {}
+    protected set snake_prot_acc(var_) {}
                   ~~~~~~~~~~~~~~ [Property must be in camel case]
 }
 
@@ -101,24 +107,28 @@ class StaticClass {
 
 class BaseClass {
     constructor() {
-       const lower_const = 10;
-       const short = "string";
+       const _lower_const = 10;
+       const _short = "string";
        let localCamel = 10;
            ~~~~~~~~~~  [Variable must be in snake case]
+           ~~~~~~~~~~  [Variable name must have leading underscore]
     }
 
     doSomething(): void {
-       let lower_const = 10;
-       let short = "string";
+       let _lower_const = 10;
+       let _short = "string";
        let localCamel = 10;
            ~~~~~~~~~~  [Variable must be in snake case]
+           ~~~~~~~~~~  [Variable name must have leading underscore]
     }
 }
 
-function testParams(goodParam, bad_param, _badLead, badTrail_) {}
-                               ~~~~~~~~~                       [Parameter must be in camel case]
-                                          ~~~~~~~~             [Parameter name must not have leading underscore]
-                                                    ~~~~~~~~~  [Parameter name must not have trailing underscore]
+function testParams(noTrail, bad_param, _badLead, badTrail_) {}
+                    ~~~~~~~                                    [Parameter name must have trailing underscore]
+                             ~~~~~~~~~                         [Parameter must be in camel case]
+                             ~~~~~~~~~                         [Parameter name must have trailing underscore]
+                                        ~~~~~~~~               [Parameter name must not have leading underscore]
+                                        ~~~~~~~~               [Parameter name must have trailing underscore]
 let { foo, bar } = { foo: 1, bar: 2 };
 let [ InvalidFoo, invalid_bar, ...invalid_baz ] =  [1, 2, 3, 4];
       ~~~~~~~~~~                              [Variable must be in camel case]
