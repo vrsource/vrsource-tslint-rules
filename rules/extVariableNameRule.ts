@@ -261,7 +261,12 @@ class VariableNameWalker extends Lint.RuleWalker {
     }
 
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
-        this.checkName(node, PARAMETER_TAG);
+        const parameterProperty: boolean =
+            Lint.hasModifier(node.modifiers, ts.SyntaxKind.PublicKeyword) ||
+            Lint.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword) ||
+            Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword);
+
+        this.checkName(node, parameterProperty ? PROPERTY_TAG : PARAMETER_TAG);
         super.visitParameterDeclaration(node);
     }
 
@@ -325,10 +330,7 @@ class VariableNameWalker extends Lint.RuleWalker {
             tags.push(CONST_TAG);
         }
 
-        if ((node.kind === ts.SyntaxKind.PropertyDeclaration) ||
-            (node.kind === ts.SyntaxKind.SetAccessor) ||
-            (node.kind === ts.SyntaxKind.GetAccessor) ||
-            (node.kind === ts.SyntaxKind.MethodDeclaration)) {
+        if (primaryTag === PROPERTY_TAG || primaryTag === METHOD_TAG) {
             if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
                 tags.push(PRIVATE_TAG);
             } else if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword)) {

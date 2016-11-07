@@ -15,6 +15,18 @@ var trailing_ = "";
 var number = 42;
     ~~~~~~      [Variable name clashes with keyword/type]
 
+class BadParamPropClass {
+    constructor(public badPublic_, protected BadPascal, private bad_snake) {}
+                       ~~~~~~~~~~                                          [Property name must not have trailing underscore]
+                       ~~~~~~~~~~                                          [Property must be in snake case]
+                                             ~~~~~~~~~                     [Property must be in camel case]
+                                                                ~~~~~~~~~  [Property must be in camel case]
+}
+
+class GoodParamPropClass {
+    constructor(public good_public, protected goodProtected_, private _goodPrivate) {}
+}
+
 function varScope() {
     let localCamel = 10;
         ~~~~~~~~~~  [Variable must be in snake case]
