@@ -500,7 +500,7 @@ tslint@^4.1.1:
     underscore.string "^3.3.4"
     update-notifier "^1.0.2"
 
-typescript@~2.1.4:
+typescript@~2.1.0:
   version "2.1.4"
   resolved "http://yogi.priority5.com:9090/typescript/-/typescript-2.1.4.tgz#b53b69fb841126acb1dd4b397d21daba87572251"
 

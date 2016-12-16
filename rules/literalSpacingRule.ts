@@ -94,7 +94,8 @@ class LiteralSpacingRuleWalker extends Lint.RuleWalker {
         }
         // const first_child = children[0];                 // " ["
         const second_child = children[1];                   // " 1, 3, 5,"
-        const last_child  = children[children.length - 1];  // " ]"
+        const last_child   = children[children.length - 1];  // " ]"
+        const is_empty     = second_child.getText() === "";
 
         let [front_start, front_end] = [second_child.getFullStart(), second_child.getStart()];
         let [back_start,  back_end]  = [last_child.getFullStart(), last_child.getStart()];
@@ -102,24 +103,27 @@ class LiteralSpacingRuleWalker extends Lint.RuleWalker {
         let front_text = this.getSourceText(front_start, front_end);
         let back_text  = this.getSourceText(back_start, back_end);
 
-        function doCheck(text: string, start: number, end: number) {
+        // outerText: the string between the full edge and the start of the node content
+        // nodeEdgeChar: the first character of the node content
+        function doCheck(edgeText: string, nodeEdgeChar: string, start: number, end: number) {
             if ((NEVER_OPT === checkType) &&
-                (text.length > 0) &&
-                (text.indexOf("\n") === -1)) {
-                self.addFailure(self.createFailure(start, (end - start), NEVER_FAIL));
+                ((edgeText.length > 0) || (nodeEdgeChar === " ")) &&
+                (edgeText.indexOf("\n") === -1)) {
+                const len = Math.max((end - start), 1);
+                self.addFailure(self.createFailure(start, len, NEVER_FAIL));
             }
 
-            // if the space text is empty and second child has text (ie. there is a body)
-            //   (this handles the case of {} and [])
-            if ((ALWAYS_OPT === checkType) &&
-                (text.length === 0) &&
-                (second_child.getText() !== "")) {
-                self.addFailure(self.createFailure(start, 1, ALWAYS_FAIL));
+            if (ALWAYS_OPT === checkType) {
+                if((!is_empty) &&
+                   (edgeText.length === 0) &&
+                   (nodeEdgeChar !== " ")) {
+                    self.addFailure(self.createFailure(start, 1, ALWAYS_FAIL));
+                }
             }
         }
 
-        doCheck(front_text, front_start, front_end);
-        doCheck(back_text, back_start, back_end);
+        doCheck(front_text, second_child.getText()[0], front_start, front_end);
+        doCheck(back_text, last_child.getText()[-1], back_start, back_end);
     }
 
     protected getSourceText(pos: number, end: number): string {
