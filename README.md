@@ -220,6 +220,13 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 0.15.0
+    * ajaff: Refactor and extend ext-variable-name options
+      * simplify RuleWalker visitor methods
+      * add support for validating property accessors
+      * improve failure messages
+      * add require-leading/training-underscore options
+      * validate parameter properties as properties
   * 0.14.1
     * Add import options to literal-spacing rule
   * 0.13.1
@@ -296,3 +303,8 @@ Notes for how to build new rules and tests:
   * https://github.com/Microsoft/tslint-microsoft-contrib
   * https://github.com/buzinas/tslint-eslint-rules
 
+## Release Process
+
+  * Update version in package.json
+  * Update Changelog
+  *
