@@ -260,6 +260,10 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 Contributions are greatly appreciated.  Please fork the repository and submit a pull request.
 
+## Contributors
+
+  * ajaff
+
 # Development
 
 ## Development steps
