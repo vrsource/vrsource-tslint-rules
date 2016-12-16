@@ -50,6 +50,8 @@ Checks allowed:
       * "upper": Require variables to use UPPER_CASE_VARIABLES
    * "allow-leading-underscore": permits the variable to have a leading underscore
    * "allow-trailing-underscore": permits the variable to have a trailing underscore
+   * "require-leading-underscore": requires the variable to have a leading underscore
+   * "require-trailing-underscore": requires the variable to have a trailing underscore
    * "ban-keywords": bans a list of language keywords from being used
    * {"regex": "^.*$"}: checks the variable name against the given regex
 
@@ -79,18 +81,22 @@ const PASCAL_OPTION = "pascal";
 const CAMEL_OPTION  = "camel";
 const SNAKE_OPTION  = "snake";
 const UPPER_OPTION  = "upper";
-const LEADING_UNDERSCORE_OPTION  = "allow-leading-underscore";
-const TRAILING_UNDERSCORE_OPTION = "allow-trailing-underscore";
-const BAN_KEYWORDS_OPTION        = "ban-keywords";
+const ALLOW_LEADING_UNDERSCORE_OPTION    = "allow-leading-underscore";
+const ALLOW_TRAILING_UNDERSCORE_OPTION   = "allow-trailing-underscore";
+const REQUIRE_LEADING_UNDERSCORE_OPTION  = "require-leading-underscore";
+const REQUIRE_TRAILING_UNDERSCORE_OPTION = "require-trailing-underscore";
+const BAN_KEYWORDS_OPTION                = "ban-keywords";
 
-const CAMEL_FAIL    = "Variable must be in camel case";
-const PASCAL_FAIL   = "Variable must be in pascal case";
-const SNAKE_FAIL    = "Variable must be in snake case";
-const UPPER_FAIL    = "Variable must be in uppercase";
-const KEYWORD_FAIL  = "Variable name clashes with keyword/type";
-const LEADING_FAIL  = "Variable name must not have leading underscore";
-const TRAILING_FAIL = "Variable name must not have trailing underscore";
-const REGEX_FAIL    = "Variable name did not match required regex";
+const CAMEL_FAIL    = "must be in camel case";
+const PASCAL_FAIL   = "must be in pascal case";
+const SNAKE_FAIL    = "must be in snake case";
+const UPPER_FAIL    = "must be in uppercase";
+const KEYWORD_FAIL  = "name clashes with keyword/type";
+const LEADING_FAIL  = "name must not have leading underscore";
+const TRAILING_FAIL = "name must not have trailing underscore";
+const NO_LEADING_FAIL  = "name must have leading underscore";
+const NO_TRAILING_FAIL = "name must have trailing underscore";
+const REGEX_FAIL    = "name did not match required regex";
 
 const BANNED_KEYWORDS = ["any", "Number", "number", "String", "string",
                          "Boolean", "boolean", "Undefined", "undefined"];
@@ -110,8 +116,10 @@ class VariableChecker {
     public varTags: string[];
 
     public caseCheck:          string  = "";
-    public leadingUnderscore:  boolean = false;
-    public trailingUnderscore: boolean = false;
+    public allowLeadingUnderscore:  boolean = false;
+    public allowTrailingUnderscore: boolean = false;
+    public requireLeadingUnderscore:  boolean = false;
+    public requireTrailingUnderscore: boolean = false;
     public banKeywords:        boolean = false;
     public regex:              RegExp  = null;
 
@@ -128,8 +136,10 @@ class VariableChecker {
             this.caseCheck = UPPER_OPTION;
         }
 
-        this.leadingUnderscore  = contains(opts, LEADING_UNDERSCORE_OPTION);
-        this.trailingUnderscore = contains(opts, TRAILING_UNDERSCORE_OPTION);
+        this.allowLeadingUnderscore  = contains(opts, ALLOW_LEADING_UNDERSCORE_OPTION);
+        this.allowTrailingUnderscore = contains(opts, ALLOW_TRAILING_UNDERSCORE_OPTION);
+        this.requireLeadingUnderscore  = contains(opts, REQUIRE_LEADING_UNDERSCORE_OPTION);
+        this.requireTrailingUnderscore = contains(opts, REQUIRE_TRAILING_UNDERSCORE_OPTION);
         this.banKeywords        = contains(opts, BAN_KEYWORDS_OPTION);
 
         opts.forEach((opt) => {
@@ -153,45 +163,63 @@ class VariableChecker {
         return matches;
     }
 
-    public checkName(name: ts.Identifier, walker: Lint.RuleWalker) {
+    protected failMessage(failMessage: string, tag: string) {
+        return tag[0].toUpperCase() + tag.substr(1) + " " + failMessage;
+    }
+
+    public checkName(name: ts.Identifier, walker: Lint.RuleWalker, tag: string) {
         let variableName     = name.text;
-        const firstCharacter = variableName.charAt(0);
-        const lastCharacter  = variableName.charAt(variableName.length - 1);
+        const firstCharacter = variableName[0];
+        const lastCharacter  = variableName[variableName.length - 1];
 
         // start with regex test before we potentially strip off underscores
         if ((this.regex !== null) && !variableName.match(this.regex)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), REGEX_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(REGEX_FAIL, tag)));
+        }
+
+        // check banned words before we potentially strip off underscores
+        if (this.banKeywords && contains(BANNED_KEYWORDS, variableName)) {
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(KEYWORD_FAIL, tag)));
         }
 
         // check leading and trailing underscore
         if ("_" === firstCharacter) {
-            if (!this.leadingUnderscore) {
-                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), LEADING_FAIL));
+            if (!this.allowLeadingUnderscore && !this.requireLeadingUnderscore) {
+                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                                  this.failMessage(LEADING_FAIL, tag)));
             }
             variableName = variableName.slice(1);
+        } else if (this.requireLeadingUnderscore) {
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(NO_LEADING_FAIL, tag)));
         }
 
         if (("_" === lastCharacter) && (variableName.length > 0)) {
-            if (!this.trailingUnderscore) {
-                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), TRAILING_FAIL));
+            if (!this.allowTrailingUnderscore && !this.requireTrailingUnderscore) {
+                walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                                  this.failMessage(TRAILING_FAIL, tag)));
             }
-            variableName = variableName.slice(0,-1);
-        }
-
-        // check banned words
-        if (this.banKeywords && contains(BANNED_KEYWORDS, variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), KEYWORD_FAIL));
+            variableName = variableName.slice(0, -1);
+        } else if (this.requireTrailingUnderscore) {
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(NO_TRAILING_FAIL, tag)));
         }
 
         // run case checks
         if ((PASCAL_OPTION === this.caseCheck) && !isPascalCased(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), PASCAL_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(PASCAL_FAIL, tag)));
         } else if ((CAMEL_OPTION === this.caseCheck) && !isCamelCase(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), CAMEL_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(CAMEL_FAIL, tag)));
         } else if ((SNAKE_OPTION === this.caseCheck) && !isSnakeCase(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), SNAKE_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(SNAKE_FAIL, tag)));
         } else if ((UPPER_OPTION === this.caseCheck) && !isUpperCase(variableName)) {
-            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(), UPPER_FAIL));
+            walker.addFailure(walker.createFailure(name.getStart(), name.getWidth(),
+                              this.failMessage(UPPER_FAIL, tag)));
         }
     }
 }
@@ -212,62 +240,53 @@ class VariableNameWalker extends Lint.RuleWalker {
 
     public visitClassDeclaration(node: ts.ClassDeclaration) {
         // classes declared as default exports will be unnamed
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, CLASS_TAG));
-        }
-
+        this.checkName(node, CLASS_TAG);
         super.visitClassDeclaration(node);
     }
 
     public visitMethodDeclaration(node: ts.MethodDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, METHOD_TAG));
-        }
-
+        this.checkName(node, METHOD_TAG);
         super.visitMethodDeclaration(node);
     }
 
     public visitInterfaceDeclaration(node: ts.InterfaceDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, INTERFACE_TAG));
-        }
-
+        this.checkName(node, INTERFACE_TAG);
         super.visitInterfaceDeclaration(node);
     }
 
     // what is this?
     public visitBindingElement(node: ts.BindingElement) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, VARIABLE_TAG));
-        }
+        this.checkName(node, VARIABLE_TAG);
         super.visitBindingElement(node);
     }
 
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, PARAMETER_TAG));
-        }
+        const parameterProperty: boolean =
+            Lint.hasModifier(node.modifiers, ts.SyntaxKind.PublicKeyword) ||
+            Lint.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword) ||
+            Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword);
+
+        this.checkName(node, parameterProperty ? PROPERTY_TAG : PARAMETER_TAG);
         super.visitParameterDeclaration(node);
     }
 
     public visitPropertyDeclaration(node: ts.PropertyDeclaration) {
-        if (node.name != null && node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, PROPERTY_TAG));
-        }
+        this.checkName(node, PROPERTY_TAG);
         super.visitPropertyDeclaration(node);
     }
 
+    public visitSetAccessor(node: ts.SetAccessorDeclaration) {
+            this.checkName(node, PROPERTY_TAG);
+        super.visitSetAccessor(node);
+    }
+
+    public visitGetAccessor(node: ts.GetAccessorDeclaration) {
+        this.checkName(node, PROPERTY_TAG);
+        super.visitGetAccessor(node);
+    }
+
     public visitVariableDeclaration(node: ts.VariableDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, VARIABLE_TAG));
-        }
+        this.checkName(node, VARIABLE_TAG);
         super.visitVariableDeclaration(node);
     }
 
@@ -279,18 +298,16 @@ class VariableNameWalker extends Lint.RuleWalker {
     }
 
     public visitFunctionDeclaration(node: ts.FunctionDeclaration) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
-            const identifier = <ts.Identifier> node.name;
-            this.checkName(identifier, this, this.getNodeTags(node, FUNCTION_TAG));
-        }
+        this.checkName(node, FUNCTION_TAG);
         super.visitFunctionDeclaration(node);
     }
 
-    protected checkName(name: ts.Identifier, walker: Lint.RuleWalker, varTags: string[]) {
-        let matching_checker = this.getMatchingChecker(varTags);
-
-        if (matching_checker !== null) {
-            matching_checker.checkName(name, walker);
+    protected checkName(node: ts.Declaration, tag: string) {
+        if (node.name.kind === ts.SyntaxKind.Identifier) {
+            const matching_checker = this.getMatchingChecker(this.getNodeTags(node, tag));
+            if (matching_checker !== null) {
+                matching_checker.checkName(<ts.Identifier> node.name, this, tag);
+            }
         }
     }
 
@@ -313,8 +330,7 @@ class VariableNameWalker extends Lint.RuleWalker {
             tags.push(CONST_TAG);
         }
 
-        if ((node.kind === ts.SyntaxKind.PropertyDeclaration) ||
-            (node.kind === ts.SyntaxKind.MethodDeclaration)) {
+        if (primaryTag === PROPERTY_TAG || primaryTag === METHOD_TAG) {
             if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
                 tags.push(PRIVATE_TAG);
             } else if (Lint.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword)) {

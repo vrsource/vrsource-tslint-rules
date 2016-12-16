@@ -1,5 +1,5 @@
 {
-  "rulesDirectory": "./rules",
+  "rulesDirectory": "../../../../rules",
   "rules": {
     "prefer-const": true
   }

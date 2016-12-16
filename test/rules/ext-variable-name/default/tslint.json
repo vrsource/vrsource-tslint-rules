@@ -1,11 +1,11 @@
 {
-  "rulesDirectory": "./rules",
+  "rulesDirectory": "../../../../rules",
   "rules": {
     "ext-variable-name": [
        true,
-       ["variable", "local",  "snake"],
+       ["variable", "local",  "snake", "require-leading-underscore", "ban-keywords"],
        ["variable", "const",  "upper"],
-       ["variable",           "camel"],
+       ["variable",           "camel", "ban-keywords"],
 
        ["class", "local",  "camel"],
        ["class",           "pascal"],
@@ -26,7 +26,7 @@
        ["method", "protected", "snake", "allow-trailing-underscore"],
        ["method", "private",   "pascal", "allow-leading-underscore"],
 
-       ["parameter", "camel"],
+       ["parameter", "camel", "require-trailing-underscore"],
 
 
        ["default",                   {"regex": "^NOT_YET$"}]
