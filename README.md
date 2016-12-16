@@ -307,4 +307,6 @@ Notes for how to build new rules and tests:
 
   * Update version in package.json
   * Update Changelog
-  *
+  * git tag -a vX.Y.Z -m "Tag Release"
+  * git push --tags
+  * npm publish
