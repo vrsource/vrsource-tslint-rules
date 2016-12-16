@@ -2,7 +2,7 @@
 
 ## prefer-literal
 
-Rule to enforce a maximum number of parameters for functions and methods.
+Prefer use of literals instead of calling new on Object, Array, and Function.
 
 Flags locations where code calls "new Object()", "new Array()", "new Function()""
 
@@ -16,7 +16,7 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const OBJECT_OPTION   = "object";
@@ -62,7 +62,7 @@ class PreferLiteralWalker extends Lint.RuleWalker {
     }
 }
 
-function getFunctionName(node: ts.CallExpression): string {
+function getFunctionName(node: ts.NewExpression): string {
    let expression: ts.Expression = node.expression;
    let functionName: string      = (<any>expression).text;
    if (functionName === undefined && (<any>expression).name) {

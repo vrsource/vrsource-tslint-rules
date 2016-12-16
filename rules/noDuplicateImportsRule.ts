@@ -13,7 +13,7 @@ See: http://eslint.org/docs/rules/no-duplicate-imports
 
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const IMPORT_FAIL = "Found duplicate import";

@@ -18,7 +18,7 @@ See: eslint: object-curly-spacing and array-bracket-spacing
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const NEVER_FAIL = "Found extra space";

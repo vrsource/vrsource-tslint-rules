@@ -13,7 +13,7 @@ Rule to enforce various checks arrow functions that span multiple lines.
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const PAREN_FAIL = "Multi-line arrow function must have parentheses around parameters.";

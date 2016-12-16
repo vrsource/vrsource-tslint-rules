@@ -10,7 +10,7 @@ are not simple expressions of a single indentifier or calling expression.
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const FAIL_STR = "Expression clause must be parenthesized";
@@ -19,7 +19,7 @@ const allowedClauseKinds = [
     ts.SyntaxKind.ParenthesizedExpression, ts.SyntaxKind.CallExpression,
     ts.SyntaxKind.Identifier, ts.SyntaxKind.StringLiteral, ts.SyntaxKind.NumericLiteral,
     ts.SyntaxKind.RegularExpressionLiteral, ts.SyntaxKind.TypeLiteral,
-    ts.SyntaxKind.StringLiteralType, ts.SyntaxKind.ArrayLiteralExpression,
+    ts.SyntaxKind.StringLiteral, ts.SyntaxKind.ArrayLiteralExpression,
     ts.SyntaxKind.ObjectLiteralExpression,
 ];
 

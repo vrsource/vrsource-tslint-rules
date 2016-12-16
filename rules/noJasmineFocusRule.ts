@@ -10,7 +10,7 @@ Flags any place developers left fit or fdescribe calls in their code.
 
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const JASMINE_FOCUS_FAIL = "Don't keep jasmine focus methods";

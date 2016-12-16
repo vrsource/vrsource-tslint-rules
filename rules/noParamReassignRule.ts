@@ -14,7 +14,7 @@ Note: for this rule to work correctly you also need to use `no-shadowed-variable
 
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const FAIL_STR = "Attempting to reassign to parameter";

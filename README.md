@@ -194,17 +194,6 @@ To maintain consistency, the rule requires a block in all cases.
 "prefer-case-blocks": true
 ```
 
-## prefer-const
-
-Prefer the use of const keyword instead of let for values that are never assigned to
-
-```json
-"prefer-const": true
-```
-
-note: this rule is copied from the typescript project.
-
-
 ## prefer-literal
 
 Flags locations where code calls "new Object()", "new Array()", "new Function()""
@@ -220,6 +209,10 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 4.0.0
+    * Update versioning to track major version of tslint
+    * Update to tslint 4.x and TS 2.x
+    * Remove `prefer-const` rule as tslint now supports it
   * 0.15.0
     * ajaff: Refactor and extend ext-variable-name options
       * simplify RuleWalker visitor methods

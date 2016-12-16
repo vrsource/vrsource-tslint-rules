@@ -22,7 +22,7 @@ See: http://eslint.org/docs/rules/dot-notation
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const FAIL_STR = "Prefer dot notation access";

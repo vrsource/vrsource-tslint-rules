@@ -14,7 +14,7 @@ To maintain consistency, the rule requires a block in all cases.
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 const FAIL_STR = "Prefer blocks for case body";

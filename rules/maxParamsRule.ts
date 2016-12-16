@@ -12,7 +12,7 @@ Rule to enforce a maximum number of parameters for functions and methods.
 ```
 */
 
-import * as Lint from "tslint/lib/lint";
+import * as Lint from "tslint";
 import * as ts from "typescript";
 
 export class Rule extends Lint.Rules.AbstractRule {
