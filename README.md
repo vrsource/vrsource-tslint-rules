@@ -209,6 +209,8 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 4.0.1
+    * Add "main" entry to package.json to allow importing
   * 4.0.0
     * Update versioning to track major version of tslint
     * Update to tslint 4.x and TS 2.x
@@ -300,6 +302,7 @@ Notes for how to build new rules and tests:
 
   * Update version in package.json
   * Update Changelog
+  * git commit
   * git tag -a vX.Y.Z -m "Tag Release"
   * git push --tags
   * npm publish
