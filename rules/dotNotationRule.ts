@@ -34,7 +34,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class PreferLiteralWalker extends Lint.RuleWalker {
-    public allowedPattern: RegExp = null;
+    public allowedPattern: RegExp | null = null;
     protected validIdPattern = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 
     constructor(sourceFile: ts.SourceFile, options: Lint.IOptions) {
@@ -51,7 +51,7 @@ class PreferLiteralWalker extends Lint.RuleWalker {
     protected visitElementAccessExpression(node: ts.ElementAccessExpression) {
         let argExp = node.argumentExpression;
 
-        if (argExp.kind === ts.SyntaxKind.StringLiteral) {
+        if (argExp && argExp.kind === ts.SyntaxKind.StringLiteral) {
             let text = (argExp as ts.StringLiteral).text;
             const is_valid_id = this.validIdPattern.test(text);
 

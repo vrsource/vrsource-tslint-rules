@@ -4,6 +4,7 @@
     "module": "commonjs",
     "removeComments": true,
     "inlineSourceMap": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "strictNullChecks": true
   }
 }

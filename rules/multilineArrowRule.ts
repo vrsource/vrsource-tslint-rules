@@ -58,7 +58,7 @@ class MultilineArrowRuleWalker extends Lint.RuleWalker {
             }
 
             if (this.requireBlock) {
-                if (body.kind !== ts.SyntaxKind.Block) {
+                if (body && body.kind !== ts.SyntaxKind.Block) {
                     this.addFailure(this.createFailure(body.getStart(), body.getWidth(), BLOCK_FAIL));
                 }
             }
