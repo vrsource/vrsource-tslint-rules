@@ -121,7 +121,7 @@ class VariableChecker {
     public requireLeadingUnderscore:  boolean = false;
     public requireTrailingUnderscore: boolean = false;
     public banKeywords:        boolean = false;
-    public regex:              RegExp  = null;
+    public regex:              RegExp | null  = null;
 
     constructor(opts: any[]) {
         this.varTags = opts.filter(v => contains(VALID_VAR_TAGS, v));
@@ -303,7 +303,7 @@ class VariableNameWalker extends Lint.RuleWalker {
     }
 
     protected checkName(node: ts.Declaration, tag: string) {
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
+        if (node.name && node.name.kind === ts.SyntaxKind.Identifier) {
             const matching_checker = this.getMatchingChecker(this.getNodeTags(node, tag));
             if (matching_checker !== null) {
                 matching_checker.checkName(<ts.Identifier> node.name, this, tag);
@@ -311,7 +311,7 @@ class VariableNameWalker extends Lint.RuleWalker {
         }
     }
 
-    protected getMatchingChecker(varTags: string[]): VariableChecker {
+    protected getMatchingChecker(varTags: string[]): VariableChecker | null {
         let matching_checkers = this.checkers.filter(checker => checker.requiredTagsFound(varTags));
         if (matching_checkers.length > 0) {
             return matching_checkers[0];
@@ -356,7 +356,7 @@ class VariableNameWalker extends Lint.RuleWalker {
 }
 
 
-function nearestBody(node: ts.Node): {isSourceFile: boolean, containingBody: ts.Node} {
+function nearestBody(node: ts.Node): {isSourceFile: boolean, containingBody: ts.Node | undefined} {
     const VALID_PARENT_TYPES = [
         ts.SyntaxKind.SourceFile,
         ts.SyntaxKind.FunctionDeclaration,
@@ -382,7 +382,7 @@ function isConstVariable(node: ts.VariableDeclaration | ts.VariableStatement): b
         ? (<ts.VariableDeclaration> node).parent
         : (<ts.VariableStatement> node).declarationList;
 
-    return Lint.isNodeFlagSet(parentNode, ts.NodeFlags.Const);
+    return !parentNode || Lint.isNodeFlagSet(parentNode, ts.NodeFlags.Const);
 }
 
 function isPascalCased(name: string) {
