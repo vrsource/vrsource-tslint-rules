@@ -3,25 +3,20 @@
 	// for the documentation about the tasks.json format
 	"version": "0.1.0",
 	"isShellCommand": true,
-   "linux": { "command": "sh", "args": ["-c"] },
-   "osx": { "command": "sh", "args": ["-c"] },
-   "windows": { "command": "powershell", "args": ["-Command"] },
+  "command": "npm",
 	"showOutput": "always",
 	"problemMatcher": "$tsc",
+  "suppressTaskName": true,
 	"tasks": [
     {
       "taskName": "build",
-      "args": ["./build.sh"],
-      "suppressTaskName": true,
       "isBuildCommand": true,
-      "isTestCommand": false,
-		"problemMatcher": "$tsc"
+      "args": ["run", "build"],
+      "problemMatcher": "$tsc"
     },
     {
-      "taskName": "tests",
-      "args": ["./run_tests.sh"],
-      "suppressTaskName": true,
-      "isBuildCommand": false,
+      "taskName": "test",
+      "args": ["run", "test"],
       "isTestCommand": true
     }
   ]
