@@ -115,9 +115,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 class VariableChecker {
     public varTags: string[];
 
-    public caseCheck:          string  = "";
-    public allowLeadingUnderscore:  boolean = false;
-    public allowTrailingUnderscore: boolean = false;
+    public caseCheck:                 string  = "";
+    public allowLeadingUnderscore:    boolean = false;
+    public allowTrailingUnderscore:   boolean = false;
     public requireLeadingUnderscore:  boolean = false;
     public requireTrailingUnderscore: boolean = false;
     public banKeywords:        boolean = false;

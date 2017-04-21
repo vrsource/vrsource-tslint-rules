@@ -37,7 +37,7 @@ class MultilineArrowRuleWalker extends Lint.RuleWalker {
         this.requireBlock  = contains(options.ruleArguments,  "require-block");
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration) {
+    protected visitArrowFunction(node: ts.ArrowFunction) {
         const text = node.getText();
         const body = node.body;
 

@@ -49,7 +49,7 @@ class MaxParamsRuleWalker extends Lint.RuleWalker {
         super.visitFunctionExpression(node);
     }
 
-    protected visitArrowFunction(node: ts.FunctionLikeDeclaration) {
+    protected visitArrowFunction(node: ts.ArrowFunction) {
         this.checkParams(node.parameters);
         super.visitArrowFunction(node);
     }

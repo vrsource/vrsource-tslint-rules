@@ -41,7 +41,7 @@ class PreferLiteralWalker extends Lint.RuleWalker {
         super(sourceFile, options);
 
         if (options.ruleArguments.length > 0) {
-            let opts_obj: Object = options.ruleArguments[0];
+            let opts_obj: any = options.ruleArguments[0];
             if (opts_obj["allow-pattern"]) {
                 this.allowedPattern = new RegExp(opts_obj["allow-pattern"]);
             }
@@ -68,7 +68,7 @@ class PreferLiteralWalker extends Lint.RuleWalker {
 
     protected stripQuotes(text: string): string {
         let res = text;
-        let is_quote = (v) => (v[0] === '"' || v[0] === "'");
+        let is_quote = (v: string) => (v[0] === '"' || v[0] === "'");
 
         if (is_quote(res[0])) {
             res = res.slice(1);
