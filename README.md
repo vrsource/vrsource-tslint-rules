@@ -264,7 +264,9 @@ Contributions are greatly appreciated.  Please fork the repository and submit a 
 
 ## Contributors
 
-  * ajaff
+  * ajafff
+  * abdulmoizeng
+  * timocov
 
 # Development
 
