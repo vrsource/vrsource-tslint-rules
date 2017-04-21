@@ -20,9 +20,20 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "tslint": "^4.1.1"
+    "tslint": "^4.1.1",
+    "chokidar-cli": "1.2.0"
   },
   "devDependencies": {
     "typescript": "~2.1.0"
+  },
+  "watch": {
+    "test": "rules/*.ts"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "tslint rules/*.ts",
+    "test:once": "./run_tests.sh",
+    "test": "npm run lint && npm run build && npm run test:once",
+    "watch": "chokidar 'rules/*.ts' 'test/**/*' -c 'npm run test'"
   }
 }

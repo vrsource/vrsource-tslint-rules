@@ -5,6 +5,8 @@
     "removeComments": true,
     "inlineSourceMap": true,
     "preserveConstEnums": true,
-    "strictNullChecks": true
+    "strictNullChecks": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   }
 }

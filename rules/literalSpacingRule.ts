@@ -114,10 +114,10 @@ class LiteralSpacingRuleWalker extends Lint.RuleWalker {
             }
 
             if (ALWAYS_OPT === checkType) {
-                if((!is_empty) &&
-                   (edgeText.length === 0) &&
-                   (nodeEdgeChar !== " ")) {
-                    self.addFailure(self.createFailure(start, 1, ALWAYS_FAIL));
+                if ((!is_empty) &&
+                    (edgeText.length === 0) &&
+                    (nodeEdgeChar !== " ")) {
+                     self.addFailure(self.createFailure(start, 1, ALWAYS_FAIL));
                 }
             }
         }
