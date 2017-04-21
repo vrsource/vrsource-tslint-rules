@@ -209,6 +209,10 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 5.1.0
+    * Updated to work with tslint 5.1.0
+    * Update package.json to include build and test scripts
+    * Cleaned up the tslint and tsconfig options used
   * 4.0.1
     * Add "main" entry to package.json to allow importing
   * 4.0.0
@@ -272,7 +276,7 @@ Contributions are greatly appreciated.  Please fork the repository and submit a 
 
 ## Development steps
 
-The run_tests.sh script will run the tests locally.
+The command `npm run test` will run tests locally.
 
 To add a new rule:
   - Add the rule's .ts file to the /rules directory
