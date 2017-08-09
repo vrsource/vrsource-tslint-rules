@@ -209,6 +209,8 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 5.1.1
+    * Move chokidar-cli to devDependencies
   * 5.1.0
     * Updated to work with tslint 5.1.0
     * Update package.json to include build and test scripts
