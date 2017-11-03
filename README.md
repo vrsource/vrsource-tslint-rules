@@ -156,6 +156,12 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
 # Changelog
 
+  * 5.8.0
+    * Update to tslint 5.8.0
+    * Remove dot-notation (use no-string-literal instead)
+    * Remove no-jasmine-focus (use ban instead)
+    * Remove no-param-reassign (use no-parameter-reassignment instead)
+    * Remove no-duplicate-import (now in tslint)
   * 5.1.1
     * Move chokidar-cli to devDependencies
   * 5.1.0
