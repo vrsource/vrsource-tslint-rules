@@ -149,17 +149,6 @@ Rule to enforce various checks arrow functions that span multiple lines.
 ]
 ```
 
-## no-duplicate-imports
-
-This rule validates that all imports from a
-single module exist in a single import statement;
-
-See: http://eslint.org/docs/rules/no-duplicate-imports
-
-```javascript
-"no-duplicate-imports": true
-```
-
 ## no-param-reassign
 
 Flag any place where a function parameter is assigned
