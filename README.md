@@ -149,14 +149,6 @@ Rule to enforce various checks arrow functions that span multiple lines.
 ]
 ```
 
-## no-jasmine-focus
-
-Flags any place developers left fit or fdescribe calls in their code.
-
-```javascript
-"no-jasmine-focus": true
-```
-
 ## prefer-case-blocks
 
 This rule checks to make sure that all case clauses use a block

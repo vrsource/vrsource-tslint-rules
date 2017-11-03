@@ -1,8 +1,0 @@
-{
-  "rulesDirectory": "../../../../rules",
-  "rules": {
-    "no-jasmine-focus": [
-      true
-    ]
-  }
-}
