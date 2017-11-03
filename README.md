@@ -149,19 +149,6 @@ Rule to enforce various checks arrow functions that span multiple lines.
 ]
 ```
 
-## no-param-reassign
-
-Flag any place where a function parameter is assigned
-a value in the body of a function.
-
-See: eslint no-param-reassign
-
-```javascript
-"no-param-reassign": true
-```
-
-Note: for this rule to work correctly you also need to use `no-shadowed-variable`
-
 ## no-jasmine-focus
 
 Flags any place developers left fit or fdescribe calls in their code.
