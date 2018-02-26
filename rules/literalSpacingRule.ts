@@ -132,5 +132,5 @@ class LiteralSpacingRuleWalker extends Lint.RuleWalker {
 }
 
 function contains(arr: any[], value: any): boolean {
-   return arr.indexOf(value) !== -1;
+   return arr && arr.indexOf(value) !== -1;
 }
