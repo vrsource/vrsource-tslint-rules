@@ -67,5 +67,6 @@
       "check-separator",
       "check-type"
     ]
-  }
+  },
+  "rulesDirectory": "./rules"
 }

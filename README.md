@@ -12,14 +12,11 @@ npm install --save-dev vrsource-tslint-rules
 
 Configure tslint to use the vrsource-tslint-rules folder:
 
-Add the following path to the `rulesDirectory` setting in your `tslint.json` file:
+Add `"vrsource-tslint-rules"` to the `extends` array of your `tslint.json` file:
 
 ```
 {
-   "rulesDirectory": ["node_modules/vrsource-tslint-rules/rules"]
-   "rules": {
-     ...
-   }
+  "extends": ["vrsource-tslint-rules"]
 }
 ```
 
