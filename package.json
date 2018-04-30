@@ -20,8 +20,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "tslint": "~5.8.0",
-    "typescript": "~2.5.3"
+    "tslint": "*",
+    "typescript": "*"
   },
   "devDependencies": {
     "@types/node": "^10.0.0",
