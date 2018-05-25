@@ -21,7 +21,7 @@
   "license": "MIT",
   "peerDependencies": {
     "tslint": "~5.8.0",
-    "typescript": "~2.5.3",
+    "typescript": "~2.5.3"
   },
   "devDependencies": {
     "chokidar-cli": "~1.2.0"
