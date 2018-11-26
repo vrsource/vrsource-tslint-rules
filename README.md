@@ -16,7 +16,7 @@ Add the following path to the `rulesDirectory` setting in your `tslint.json` fil
 
 ```
 {
-   "rulesDirectory": ["node_modules/vrsource-tslint-rules/rules"]
+   "rulesDirectory": ["vrsource-tslint-rules/rules"]
    "rules": {
      ...
    }
