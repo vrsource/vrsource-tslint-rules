@@ -155,7 +155,8 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ```
 
 # Changelog
-
+  * 5.8.3
+    * Bump release
   * 5.8.2
     * move tslint and typescript to peerDependencies
     * improve method to use as rulesDirectory
