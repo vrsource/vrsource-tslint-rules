@@ -27,12 +27,6 @@ const ALWAYS_FAIL = "Missing whitespace";
 const NEVER_OPT  = "never";
 const ALWAYS_OPT = "always";
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new LiteralSpacingRuleWalker(sourceFile, this.getOptions()));
-    }
-}
-
 class LiteralSpacingRuleWalker extends Lint.RuleWalker {
     public arrayCheck:  string = NEVER_OPT;
     public objCheck:    string = NEVER_OPT;
@@ -133,4 +127,10 @@ class LiteralSpacingRuleWalker extends Lint.RuleWalker {
 
 function contains(arr: any[], value: any): boolean {
    return arr && arr.indexOf(value) !== -1;
+}
+
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new LiteralSpacingRuleWalker(sourceFile, this.getOptions()));
+    }
 }

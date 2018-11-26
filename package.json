@@ -1,39 +1,42 @@
 {
-  "name": "vrsource-tslint-rules",
-  "version": "5.8.2",
-  "description": "Extension rules for tslint",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vrsource/vrsource-tslint-rules"
-  },
-  "main": "tslint.json",
-  "keywords": [
-    "eslint",
-    "tslint",
-    "custom-rules",
-    "rules",
-    "stylish",
-    "lint",
-    "linting",
-    "linter",
-    "tslint-plugin"
-  ],
-  "license": "MIT",
-  "peerDependencies": {
-    "tslint": "^5.8.0",
-    "typescript": ">= 2.5.3"
-  },
-  "devDependencies": {
-    "chokidar-cli": "~1.2.0"
-  },
-  "watch": {
-    "test": "rules/*.ts"
-  },
-  "scripts": {
-    "build": "tsc -p .",
-    "lint": "tslint rules/*.ts",
-    "test:once": "./run_tests.sh",
-    "test": "npm run lint && npm run build && npm run test:once",
-    "watch": "chokidar 'rules/*.ts' 'test/**/*' -c 'npm run test'"
-  }
+   "name": "vrsource-tslint-rules",
+   "version": "5.8.2",
+   "description": "Extension rules for tslint",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/vrsource/vrsource-tslint-rules"
+   },
+   "main": "tslint.json",
+   "keywords": [
+      "eslint",
+      "tslint",
+      "custom-rules",
+      "rules",
+      "stylish",
+      "lint",
+      "linting",
+      "linter",
+      "tslint-plugin"
+   ],
+   "license": "MIT",
+   "peerDependencies": {
+      "tslint": "*",
+      "typescript": "*"
+   },
+   "devDependencies": {
+      "@types/node": "^10.0.0",
+      "chokidar-cli": "~1.2.0",
+      "tslint": "~5.8.0",
+      "typescript": "~2.5.3"
+   },
+   "watch": {
+      "test": "rules/*.ts"
+   },
+   "scripts": {
+      "build": "tsc -p .",
+      "lint": "tslint rules/*.ts --project .",
+      "test:once": "./run_tests.sh",
+      "test": "npm run lint && npm run build && npm run test:once",
+      "watch": "chokidar 'rules/*.ts' 'test/**/*' -c 'npm run test'"
+   }
 }

@@ -19,12 +19,6 @@ import * as ts from "typescript";
 
 const FAIL_STR = "Prefer blocks for case body";
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new CaseBlockWalker(sourceFile, this.getOptions()));
-    }
-}
-
 class CaseBlockWalker extends Lint.RuleWalker {
 
     protected visitDefaultClause(node: ts.DefaultClause) {
@@ -50,3 +44,8 @@ class CaseBlockWalker extends Lint.RuleWalker {
     }
 }
 
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new CaseBlockWalker(sourceFile, this.getOptions()));
+    }
+}

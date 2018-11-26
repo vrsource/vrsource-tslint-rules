@@ -19,12 +19,6 @@ import * as ts from "typescript";
 const PAREN_FAIL = "Multi-line arrow function must have parentheses around parameters.";
 const BLOCK_FAIL = "Multi-line arrow function must have block around body.";
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MultilineArrowRuleWalker(sourceFile, this.getOptions()));
-    }
-}
-
 
 class MultilineArrowRuleWalker extends Lint.RuleWalker {
     public requireParens = false;
@@ -71,4 +65,10 @@ class MultilineArrowRuleWalker extends Lint.RuleWalker {
 
 function contains(arr: any[], value: any): boolean {
    return arr.indexOf(value) !== -1;
+}
+
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new MultilineArrowRuleWalker(sourceFile, this.getOptions()));
+    }
 }

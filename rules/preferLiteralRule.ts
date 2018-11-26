@@ -27,12 +27,6 @@ const OBJECT_FAIL   = "Prefer literal object creation";
 const FUNCTION_FAIL = "Prefer literal function creation";
 const ARRAY_FAIL    = "Prefer literal array creation";
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new PreferLiteralWalker(sourceFile, this.getOptions()));
-    }
-}
-
 class PreferLiteralWalker extends Lint.RuleWalker {
     public checkObject   = false;
     public checkFunction = false;
@@ -73,4 +67,10 @@ function getFunctionName(node: ts.NewExpression): string {
 
 function contains(arr: any[], value: any): boolean {
    return arr.indexOf(value) !== -1;
+}
+
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new PreferLiteralWalker(sourceFile, this.getOptions()));
+    }
 }

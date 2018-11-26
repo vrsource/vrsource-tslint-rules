@@ -23,12 +23,6 @@ const allowedClauseKinds = [
     ts.SyntaxKind.ObjectLiteralExpression,
 ];
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new PreferLiteralWalker(sourceFile, this.getOptions()));
-    }
-}
-
 class PreferLiteralWalker extends Lint.RuleWalker {
     protected visitConditionalExpression(node: ts.ConditionalExpression) {
         let clauses = [node.condition, node.whenFalse, node.whenTrue];
@@ -43,3 +37,8 @@ class PreferLiteralWalker extends Lint.RuleWalker {
     }
 }
 
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new PreferLiteralWalker(sourceFile, this.getOptions()));
+    }
+}
