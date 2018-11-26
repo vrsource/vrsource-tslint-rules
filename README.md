@@ -158,6 +158,7 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 
   * 5.8.2
     * move tslint and typescript to peerDependencies
+    * improve method to use as rulesDirectory
   * 5.8.1
     * Fix bug in spacing rule
   * 5.8.0
@@ -230,6 +231,8 @@ Contributions are greatly appreciated.  Please fork the repository and submit a 
   * ajafff
   * abdulmoizeng
   * timocov
+  * jayrylan
+  * ethanresnick
 
 # Development
 
