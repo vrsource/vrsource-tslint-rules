@@ -15,11 +15,6 @@ Rule to enforce a maximum number of parameters for functions and methods.
 import * as Lint from "tslint";
 import * as ts from "typescript";
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new MaxParamsRuleWalker(sourceFile, this.getOptions()));
-    }
-}
 
 class MaxParamsRuleWalker extends Lint.RuleWalker {
     public maxCount   = 3;
@@ -65,3 +60,8 @@ class MaxParamsRuleWalker extends Lint.RuleWalker {
     }
 }
 
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        return this.applyWithWalker(new MaxParamsRuleWalker(sourceFile, this.getOptions()));
+    }
+}

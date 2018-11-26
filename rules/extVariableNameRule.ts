@@ -102,13 +102,6 @@ const BANNED_KEYWORDS = ["any", "Number", "number", "String", "string",
                          "Boolean", "boolean", "Undefined", "undefined"];
 
 
-export class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        const variableNameWalker = new VariableNameWalker(sourceFile, this.getOptions());
-        return this.applyWithWalker(variableNameWalker);
-    }
-}
-
 /**
  * Configured with details needed to check a specific variable type.
  */
@@ -302,7 +295,7 @@ class VariableNameWalker extends Lint.RuleWalker {
         super.visitFunctionDeclaration(node);
     }
 
-    protected checkName(node: ts.Declaration, tag: string) {
+    protected checkName(node: ts.NamedDeclaration, tag: string) {
         if (node.name && node.name.kind === ts.SyntaxKind.Identifier) {
             const matching_checker = this.getMatchingChecker(this.getNodeTags(node, tag));
             if (matching_checker !== null) {
@@ -354,7 +347,6 @@ class VariableNameWalker extends Lint.RuleWalker {
         return tags;
     }
 }
-
 
 function nearestBody(node: ts.Node): {isSourceFile: boolean, containingBody: ts.Node | undefined} {
     const VALID_PARENT_TYPES = [
@@ -423,6 +415,12 @@ function contains(arr: any[], value: any): boolean {
    return arr.indexOf(value) !== -1;
 }
 
+export class Rule extends Lint.Rules.AbstractRule {
+    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+        const variableNameWalker = new VariableNameWalker(sourceFile, this.getOptions());
+        return this.applyWithWalker(variableNameWalker);
+    }
+}
 
 /**
  * Original version based upon variable-name rule:
