@@ -155,6 +155,10 @@ Flags locations where code calls "new Object()", "new Array()", "new Function()"
 ```
 
 # Changelog
+  * 6.0.0
+    * Breaking change: older checks removed in 5.8.0 
+      did not get fully removed.  Now they are.
+      Note: 5.8.2 and 5.8.3 also suffer from this breaking change.
   * 5.8.3
     * Bump release
   * 5.8.2

@@ -1,6 +1,6 @@
 {
    "name": "vrsource-tslint-rules",
-   "version": "5.8.3",
+   "version": "6.0.0",
    "description": "Extension rules for tslint",
    "repository": {
       "type": "git",
